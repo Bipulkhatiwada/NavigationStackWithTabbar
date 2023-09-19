@@ -59,6 +59,7 @@ struct ContentView: View {
                 
             }
             .padding()
+            .navigationBarTitle("ContentView")
         }
     }
 }
@@ -67,7 +68,6 @@ struct PrepareView: View {
     var name: String
     
     var body: some View {
-        NavigationView{
             Form {
                 Text(name)
                     .font(.largeTitle)
@@ -83,14 +83,14 @@ struct PrepareView: View {
                     }
                 
             }
-        }
+//        .navigationBarTitle("PrepareView")
     }
 }
+
 struct ConfirmView: View {
     var name: String
     
     var body: some View {
-        NavigationView{
             Form {
                 Text(name)
                     .font(.largeTitle)
@@ -106,20 +106,20 @@ struct ConfirmView: View {
                 }
                 
             }
-        }
+//        .navigationBarTitle("ConfirmView")
     }
 }
+
 struct SuccessView: View {
     var name: String
     
     var body: some View {
-        NavigationView{
             Form {
                 Text(name)
                     .font(.largeTitle)
                 
             }
-        }
+//        .navigationBarTitle("SuccessView")
     }
 }
 
