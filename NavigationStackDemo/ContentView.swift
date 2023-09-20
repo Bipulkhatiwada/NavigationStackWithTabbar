@@ -7,119 +7,56 @@
 
 import SwiftUI
 
-enum Route {
-    case prepare(String)
-    case confirm(String)
-    case success(String)
-}
-
-struct Navigator {
-    static func navigate<T: View>(route: Route, content: () -> T) -> AnyView {
-        switch route {
-        case .prepare(let name):
-            return AnyView(
-                NavigationLink(
-                    destination: PrepareView(name: name),
-                    label: {
-                        content()
-                    }
-                )
-            )
-        case .confirm(let confirmModel):
-            return AnyView(
-                NavigationLink(
-                    destination: ConfirmView(name: confirmModel),
-                    label: {
-                        content()
-                    }
-                )
-            )
-        case .success(let successModel):
-            return AnyView(
-                NavigationLink(
-                    destination: SuccessView(name: successModel),
-                    label: {
-                        content()
-                    }
-                )
-            )
-        }
-    }
-}
-
 struct ContentView: View {
-    let views = ["home", "prepare", "confirm","succes"]
+    @State var isActive : Bool = false
+
     var body: some View {
-        NavigationView{
-            VStack {
-                    Navigator.navigate(route: .prepare("preparingg")){
-                        Text("Go to Prepare")
-                            .foregroundColor(Color.red)
-                    }
-                
+        NavigationView {
+            NavigationLink(
+                destination: ContentView2(rootIsActive: self.$isActive),
+                isActive: self.$isActive
+            ) {
+                Text("Hello, World!")
             }
-            .padding()
-            .navigationBarTitle("ContentView")
+            .isDetailLink(false)
+            .navigationBarTitle("Root")
         }
     }
 }
 
-struct PrepareView: View {
-    var name: String
-    
+struct ContentView2: View {
+    @Binding var rootIsActive : Bool
+
     var body: some View {
-            Form {
-                Text(name)
-                    .font(.largeTitle)
-                    Navigator.navigate(route: .confirm("confirming")){
-                        
-                        Button{
-                            
-                        }label: {
-                            Text("go to Confirm")
-                                .foregroundColor(Color.red)
-                        }
-                        
-                    }
-                
-            }
-//        .navigationBarTitle("PrepareView")
+        NavigationLink(destination: ContentView3(rootIsActive: self.$rootIsActive)) {
+            Text("Hello, World #2!")
+        }
+        .isDetailLink(false)
+        .navigationBarTitle("Two")
     }
 }
 
-struct ConfirmView: View {
-    var name: String
-    
+struct ContentView3: View {
+    @Binding var rootIsActive : Bool
+
     var body: some View {
-            Form {
-                Text(name)
-                    .font(.largeTitle)
-                Navigator.navigate(route: .success("This is success screen")){
-                    
-                    Button{
-                        
-                    }label: {
-                        Text("go to success")
-                            .foregroundColor(Color.red)
-                    }
-                    
-                }
-                
-            }
-//        .navigationBarTitle("ConfirmView")
+        NavigationLink(destination: ContentView4(shouldPopToRootView: self.$rootIsActive)) {
+            Text("Hello, World #2!")
+        }
+        .isDetailLink(false)
+        .navigationBarTitle("Two")
     }
 }
+struct ContentView4: View {
+    @Binding var shouldPopToRootView : Bool
 
-struct SuccessView: View {
-    var name: String
-    
     var body: some View {
-            Form {
-                Text(name)
-                    .font(.largeTitle)
-                
+        VStack {
+            Text("Hello, World #3!")
+            Button (action: { self.shouldPopToRootView = false } ){
+                Text("Pop to root")
             }
-//        .navigationBarTitle("SuccessView")
+        }.navigationBarTitle("Three")
     }
 }
 
@@ -128,3 +65,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
