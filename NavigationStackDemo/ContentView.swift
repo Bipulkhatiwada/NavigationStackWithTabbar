@@ -7,63 +7,64 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State var isActive : Bool = false
-
-    var body: some View {
-        NavigationView {
-            NavigationLink(
-                destination: ContentView2(rootIsActive: self.$isActive),
-                isActive: self.$isActive
-            ) {
-                Text("Hello, World!")
-            }
-            .isDetailLink(false)
-            .navigationBarTitle("Root")
-        }
-    }
+enum AppView {
+    case login, main,dashboard
 }
 
-struct ContentView2: View {
-    @Binding var rootIsActive : Bool
-
-    var body: some View {
-        NavigationLink(destination: ContentView3(rootIsActive: self.$rootIsActive)) {
-            Text("Hello, World #2!")
-        }
-        .isDetailLink(false)
-        .navigationBarTitle("Two")
-    }
+class ViewRouter: ObservableObject {
+    // here you can decide which view to show at launch
+    @Published var currentView: AppView = .login
 }
-
-struct ContentView3: View {
-    @Binding var rootIsActive : Bool
-
-    var body: some View {
-        NavigationLink(destination: ContentView4(shouldPopToRootView: self.$rootIsActive)) {
-            Text("Hello, World #2!")
-        }
-        .isDetailLink(false)
-        .navigationBarTitle("Two")
-    }
-}
-struct ContentView4: View {
-    @Binding var shouldPopToRootView : Bool
-
+struct RootView: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+    
     var body: some View {
         VStack {
-            Text("Hello, World #3!")
-            Button (action: { self.shouldPopToRootView = false } ){
-                Text("Pop to root")
+            if viewRouter.currentView == .login {
+                LoginView()
+            } else if viewRouter.currentView == .main {
+                MainView()
+            }else if viewRouter.currentView == .dashboard{
+                DashBoardView()
             }
-        }.navigationBarTitle("Three")
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+struct LoginView: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+    
+    var body: some View {
+        VStack {
+            Text("Login View")
+            Button("Log in") {
+                viewRouter.currentView = .main
+            }
+        }
     }
 }
 
-
+struct MainView: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+    
+    var body: some View {
+        VStack {
+            Text("Main View")
+            Button("go to dashboard") {
+                viewRouter.currentView = .dashboard
+            }
+        }
+    }
+}
+struct DashBoardView: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+    
+    var body: some View {
+        VStack {
+            Text("dashboard View")
+            Button("go to main ") {
+                viewRouter.currentView = .login
+            }
+        }
+    }
+}

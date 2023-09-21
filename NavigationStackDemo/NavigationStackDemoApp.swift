@@ -8,10 +8,13 @@
 import SwiftUI
 
 @main
-struct NavigationStackDemoApp: App {
+struct TestApp: App {
+    @StateObject private var viewRouter = ViewRouter()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environmentObject(viewRouter)
         }
     }
 }
