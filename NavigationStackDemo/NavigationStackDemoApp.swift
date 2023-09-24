@@ -8,13 +8,33 @@
 import SwiftUI
 
 @main
-struct TestApp: App {
-    @StateObject private var viewRouter = ViewRouter()
-    
+struct NavigationStackDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environmentObject(viewRouter)
+            NavigationView{
+                tabbarContentView()
+            }.environmentObject(ViewRouter())
+            
         }
+    }
+}
+
+struct tabbarContentView: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+//    @State private var selectedTab = 1
+
+    var body: some View {
+        TabView {
+            HomeView()
+                .navigationTitle("Home")
+                .tabItem {
+                    Image(systemName: "1.circle")
+                    Text("Tab 1")
+                }
+                .tag(viewRouter.tbabarTag)
+        }
+//        .onAppear {
+//            selectedTab = 1  // Initially select the second tab
+//        }
     }
 }
