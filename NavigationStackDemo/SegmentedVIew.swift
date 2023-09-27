@@ -25,10 +25,14 @@ struct SegmentedView: View {
 
     var body: some View {
             VStack {
-                Picker(selection: $selectedIndex, label: Text("What is your favorite view?")) {
-                    Text("Personal Information").tag(0)
-                    Text("Documents").tag(1)
-                }
+                Picker("", selection: $selectedIndex, content: {
+                    Text("Personal information")
+                        .tag(0)
+                        .frame(height: 100)
+                    Text("Documents")
+                        .tag(1)
+                        .frame(height: 100)
+                })
                 //            .fixedSize()
                 .background(personalSegmentSelected ? Color.white : Color.gray)
                 .modifier(CustomPickerStyle())
@@ -42,21 +46,27 @@ struct SegmentedView: View {
                 default:
                     EmptyView()
                 }
-                
-                VStack{
-                    Spacer()
-                    Button(action: {
-                        print("Button tapped")
-                    }) {
-                        Text("Verify Documents")
-                            .foregroundColor(.black)
-                            .padding()
-                            .background(Color.yellow)
-                            .cornerRadius(10)
-                            .frame(maxWidth: .infinity)
-                    }
+            Spacer()
+                Button {
+                  
+                }label: {
+                    Text("Verify Documents")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(Color.black)
                     
                 }
+                .frame(maxWidth: .infinity)
+                .background(
+                    ZStack{
+                        Rectangle()
+                            .fill(Color.yellow)
+                            .cornerRadius(12)
+                        
+                    }
+                )
+                .padding()
+                    
         
     }.navigationTitle("Personal Details")
         

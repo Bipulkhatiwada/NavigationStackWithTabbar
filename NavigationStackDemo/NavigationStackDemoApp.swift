@@ -9,6 +9,15 @@ import SwiftUI
 
 @main
 struct NavigationStackDemoApp: App {
+    init() {
+         // Customize navigation bar appearance
+         let appearance = UINavigationBarAppearance()
+         appearance.setBackIndicatorImage(UIImage(systemName: "arrow.left.circle.fill"), transitionMaskImage: UIImage(systemName: "arrow.left.circle.fill"))
+         appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.yellow]
+
+         UINavigationBar.appearance().standardAppearance = appearance
+         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+     }
     var body: some Scene {
         WindowGroup {
             NavigationView{
@@ -38,4 +47,14 @@ struct tabbarContentView: View {
 //            selectedTab = 1  // Initially select the second tab
 //        }
     }
+}
+//extension UINavigationController{
+//    open override func viewWillLayoutSubviews() {
+//        navigationBar.topItem?.backButtonDisplayMode = .minimal
+//        navigationBar.tintColor = .systemYellow
+//    }
+//}
+
+extension UINavigationBar{
+
 }
