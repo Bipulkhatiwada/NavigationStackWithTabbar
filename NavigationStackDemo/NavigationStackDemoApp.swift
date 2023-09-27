@@ -14,6 +14,7 @@ struct NavigationStackDemoApp: App {
             NavigationView{
                 tabbarContentView()
             }.environmentObject(ViewRouter())
+//                .toolbarRole(.editor)
             
         }
     }

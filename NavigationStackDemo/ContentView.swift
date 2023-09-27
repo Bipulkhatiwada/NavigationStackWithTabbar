@@ -12,6 +12,7 @@ enum Route {
     case view2
     case view3
     case home
+    case segemntedView
 
 }
 
@@ -26,6 +27,8 @@ struct Navigator {
             return AnyView(View3())
         case .home:
             return AnyView(HomeView())
+        case .segemntedView:
+            return AnyView(SegmentedView())
         }
         
     }
@@ -75,7 +78,7 @@ struct View1: View {
     var body: some View {
         VStack {
             Text("View 1")
-            NavigationLink(destination: Navigator.navigate(route: .view2) {
+            NavigationLink(destination: Navigator.navigate(route: .segemntedView) {
                 Text("Go to View 2 from View 1")
             }) {
                 Text("Go to View 2")
@@ -117,6 +120,7 @@ struct View3: View {
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

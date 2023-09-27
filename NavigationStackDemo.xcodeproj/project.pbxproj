@@ -11,6 +11,7 @@
 		29467B982AB9634C0051D4DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29467B972AB9634C0051D4DE /* ContentView.swift */; };
 		29467B9A2AB9634D0051D4DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29467B992AB9634D0051D4DE /* Assets.xcassets */; };
 		29467B9D2AB9634D0051D4DE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29467B9C2AB9634D0051D4DE /* Preview Assets.xcassets */; };
+		29E314FD2AC4231100DE81C4 /* SegmentedVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E314FC2AC4231100DE81C4 /* SegmentedVIew.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		29467B972AB9634C0051D4DE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		29467B992AB9634D0051D4DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29467B9C2AB9634D0051D4DE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		29E314FC2AC4231100DE81C4 /* SegmentedVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedVIew.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				29467B972AB9634C0051D4DE /* ContentView.swift */,
 				29467B992AB9634D0051D4DE /* Assets.xcassets */,
 				29467B9B2AB9634D0051D4DE /* Preview Content */,
+				29E314FC2AC4231100DE81C4 /* SegmentedVIew.swift */,
 			);
 			path = NavigationStackDemo;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29E314FD2AC4231100DE81C4 /* SegmentedVIew.swift in Sources */,
 				29467B982AB9634C0051D4DE /* ContentView.swift in Sources */,
 				29467B962AB9634C0051D4DE /* NavigationStackDemoApp.swift in Sources */,
 			);
