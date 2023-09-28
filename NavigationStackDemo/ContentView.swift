@@ -114,12 +114,13 @@ struct HomeView: View {
 struct CustomPageControl: View {
     var numberOfPages: Int
     var currentPage: Int
-
+    var visitedPages: [Bool]
+    
     var body: some View {
         HStack(spacing: 8) {
             ForEach(0..<numberOfPages) { index in
                 Rectangle()
-                    .fill(index == currentPage ? Color.black : Color.gray)
+                    .fill(visitedPages[index] || index == currentPage ? Color.black : Color.gray)
                     .frame(width: 80, height: 2)
             }
         }
@@ -130,10 +131,11 @@ struct CustomPageControl: View {
 struct View1: View {
     @State private var currentPage = 0
     let numberOfPages = 4
-
+    @State private var visitedPages = [true, false, false, false]
+    
     var body: some View {
         VStack {
-            CustomPageControl(numberOfPages: numberOfPages, currentPage: currentPage)
+            CustomPageControl(numberOfPages: numberOfPages, currentPage: currentPage, visitedPages: visitedPages)
             TabView(selection: $currentPage) {
                 Text("First").tag(0)
                             VStack {
@@ -163,6 +165,17 @@ struct View1: View {
 
         }
         .padding()
+        .onChange(of: currentPage) { newValue in
+            print("newValue is: \(newValue) \n currentPage is: \(currentPage) \n visitedPages is: \(visitedPages) \n visitedPagesCount is: \(visitedPages.count) \n  ")
+            visitedPages[newValue] = true
+            if currentPage == 1{
+                visitedPages[2] = false
+            }else if currentPage == 2{
+                visitedPages[3] = false
+            }else if currentPage == 0{
+                visitedPages[1] = false
+            }
+        }
     }
 }
 
