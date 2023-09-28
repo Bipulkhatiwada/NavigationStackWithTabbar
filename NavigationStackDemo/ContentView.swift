@@ -74,17 +74,95 @@ struct HomeView: View {
     }
 }
 
-struct View1: View {
+//struct View1: View {
+//    init() {
+//        UIPageControl.appearance().currentPageIndicatorTintColor = .black
+//        UIPageControl.appearance().pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
+//
+//        UIPageControl.appearance().backgroundStyle = .prominent
+//        UIPageControl.appearance().preferredIndicatorImage = UIImage(named: "status")
+//        UIPageControl.appearance().backgroundColor = .clear
+//        UIPageControl.appearance().backgroundStyle = .minimal
+//    }
+//    var body: some View {
+//        TabView{
+//            Text("First")
+//            VStack {
+//                Text("Second")
+//                NavigationLink(destination: Navigator.navigate(route: .view2) {
+//                    Text("Go to View 2 from View 1")
+//                }) {
+//                    Text("Go to View 2")
+//                }
+//            }
+//            VStack {
+//                Text("Third")
+//                NavigationLink(destination: Navigator.navigate(route: .segemntedView) {
+//                    Text("Go to View 2 from View 1")
+//                }) {
+//                    Text("Go to Segmented View")
+//                }
+//            }
+//            .navigationBarTitle("View 1", displayMode: .inline)
+//
+//            Text("Fourth")
+//        }.tabViewStyle(.page)
+//            .indexViewStyle(.page(backgroundDisplayMode: .automatic))
+//    }
+//}
+
+struct CustomPageControl: View {
+    var numberOfPages: Int
+    var currentPage: Int
+
     var body: some View {
-        VStack {
-            Text("View 1")
-            NavigationLink(destination: Navigator.navigate(route: .segemntedView) {
-                Text("Go to View 2 from View 1")
-            }) {
-                Text("Go to View 2")
+        HStack(spacing: 8) {
+            ForEach(0..<numberOfPages) { index in
+                Rectangle()
+                    .fill(index == currentPage ? Color.black : Color.gray)
+                    .frame(width: 80, height: 2)
             }
         }
-        .navigationBarTitle("View 1", displayMode: .inline)
+        .padding()
+    }
+}
+
+struct View1: View {
+    @State private var currentPage = 0
+    let numberOfPages = 4
+
+    var body: some View {
+        VStack {
+            CustomPageControl(numberOfPages: numberOfPages, currentPage: currentPage)
+            TabView(selection: $currentPage) {
+                Text("First").tag(0)
+                            VStack {
+                                Text("Second")
+                                NavigationLink(destination: Navigator.navigate(route: .view2) {
+                                    Text("Go to View 2 from View 1")
+                                }) {
+                                    Text("Go to View 2")
+                                }
+                            }
+                            .tag(1)
+                            VStack {
+                                Text("Third")
+                                NavigationLink(destination: Navigator.navigate(route: .segemntedView) {
+                                    Text("Go to View 2 from View 1")
+                                }) {
+                                    Text("Go to Segmented View")
+                                }
+                            }
+                            .navigationBarTitle("", displayMode: .inline)
+                            .tag(2)
+
+                Text("Fourth").tag(3)
+                        }
+            .tabViewStyle(.page)
+                        .indexViewStyle(.page(backgroundDisplayMode: .automatic))
+
+        }
+        .padding()
     }
 }
 
@@ -122,6 +200,14 @@ struct View3: View {
 }
 
 
+
+
+struct View1_Previews: PreviewProvider {
+    static var previews: some View {
+        View1()
+            .environmentObject(ViewRouter())
+    }
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()

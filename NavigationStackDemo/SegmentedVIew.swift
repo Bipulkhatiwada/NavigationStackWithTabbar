@@ -59,7 +59,7 @@ struct SegmentedView: View {
                 .frame(maxWidth: .infinity)
                 .background(
                     ZStack{
-                        Rectangle()
+                            Rectangle()
                             .fill(Color.yellow)
                             .cornerRadius(12)
                         
