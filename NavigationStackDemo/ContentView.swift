@@ -117,61 +117,141 @@ struct CustomPageControl: View {
     var visitedPages: [Bool]
     
     var body: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<numberOfPages) { index in
-                Rectangle()
-                    .fill(visitedPages[index] || index == currentPage ? Color.black : Color.gray)
-                    .frame(width: 80, height: 2)
+            HStack(spacing: 8) {
+                ForEach(0..<numberOfPages) { index in
+                    Rectangle()
+                        .fill(visitedPages[index] || index == currentPage ? Color.black : Color.gray)
+    //                    .fill(index == currentPage ? Color.black : Color.gray)
+                        .frame(width: 110, height: 2)
+                }
             }
-        }
         .padding()
     }
 }
 
+struct PageModel: Identifiable{
+    var id = UUID()
+    var title: String?
+    var description: String?
+    var image: String?
+    var tag: Int?
+}
+
+
 struct View1: View {
     @State private var currentPage = 0
-    let numberOfPages = 4
-    @State private var visitedPages = [true, false, false, false]
+    let numberOfPages = 3
+    @State private var visitedPages = [true, false, false]
+    
+     var pages : [PageModel] = [
+        PageModel(title: "Add Money", description: "Load your wallet instantly from any funding source easily and conviniently", image: "Welcome", tag: 0),
+        PageModel(title: "Peer-to-peer", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "PayFriends", tag: 1),
+        PageModel(title: "International Transfer (Cash-pickup, Wallet, Bank Transfer)", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "Handwithphone", tag: 2)
+    ]
     
     var body: some View {
         VStack {
             CustomPageControl(numberOfPages: numberOfPages, currentPage: currentPage, visitedPages: visitedPages)
             TabView(selection: $currentPage) {
-                Text("First").tag(0)
-                            VStack {
-                                Text("Second")
-                                NavigationLink(destination: Navigator.navigate(route: .view2) {
-                                    Text("Go to View 2 from View 1")
-                                }) {
-                                    Text("Go to View 2")
-                                }
-                            }
-                            .tag(1)
-                            VStack {
-                                Text("Third")
-                                NavigationLink(destination: Navigator.navigate(route: .segemntedView) {
-                                    Text("Go to View 2 from View 1")
-                                }) {
-                                    Text("Go to Segmented View")
-                                }
-                            }
-                            .navigationBarTitle("", displayMode: .inline)
-                            .tag(2)
-
-                Text("Fourth").tag(3)
+                
+                ForEach(pages.indices, id: \.self, content: { index in
+                    VStack(){
+                        VStack(alignment: .leading,spacing: 10){
+                            Text(pages[index].title ?? "")
+                                .font(.headline)
+                                .fontWeight(.heavy)
+                            Text(pages[index].description ?? "").font(.subheadline).foregroundColor(Color.gray)
                         }
+                        .padding()
+                        Image(pages[index].image ?? "")
+                            .resizable()
+                            .scaledToFit()
+                        Spacer()
+                        
+                    }
+                    .tag(index)
+                    
+                })
+                            
+//                VStack(){
+//                    VStack(alignment: .leading,spacing: 10){
+//                        Text("Add Money")
+//                            .font(.headline)
+//                            .fontWeight(.heavy)
+//                        Text("Load your wallet instantly from any funding source easily and conviniently").font(.subheadline).foregroundColor(Color.gray)
+//                    }
+//                    .padding()
+//                    Image("Welcome")
+//                        .resizable()
+//                        .scaledToFit()
+//                    Spacer()
+//
+//                }.tag(0)
+//                VStack(){
+//                    VStack(alignment: .leading,spacing: 10){
+//                        Text("Peer-to-peer")
+//                            .font(.headline)
+//                            .fontWeight(.heavy)
+//                        Text("Load your wallet instantly from any funding source easily and conviniently ")
+//                            .font(.subheadline).foregroundColor(Color.gray)
+//                    }
+//                    .padding()
+//                    Image("PayFriends")
+//                        .resizable()
+//                        .scaledToFit()
+//                    Spacer()
+//
+//                }.tag(1)
+//                VStack(){
+//                    VStack(alignment: .leading,spacing: 10){
+//                        Text("International Transfer (Cash-pickup, Wallet, Bank Transfer)")
+//                            .font(.headline)
+//                            .fontWeight(.heavy)
+//                        Text("Load your wallet instantly from any funding source easily and conviniently ")
+//                            .font(.subheadline).foregroundColor(Color.gray)
+//                    }
+//                    .padding()
+//                    Image("Handwithphone")
+//                        .resizable()
+//                        .scaledToFit()
+//                    Spacer()
+//
+//                }
+//                .tag(2)
+                
+            }
             .tabViewStyle(.page)
                         .indexViewStyle(.page(backgroundDisplayMode: .automatic))
+            
+            NavigationLink(destination: Navigator.navigate(route: .view2) {
+                Text("Go to View 1")
+            }) {
+                Text("Get Started")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(Color.black)
+                
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        ZStack{
+                            Rectangle()
+                                .fill(Color.yellow)
+                                .cornerRadius(12)
+                            
+                        }
+                    )
+                    .padding()
+                
+            }
+
 
         }
-        .padding()
+        
         .onChange(of: currentPage) { newValue in
             print("newValue is: \(newValue) \n currentPage is: \(currentPage) \n visitedPages is: \(visitedPages) \n visitedPagesCount is: \(visitedPages.count) \n  ")
             visitedPages[newValue] = true
             if currentPage == 1{
                 visitedPages[2] = false
-            }else if currentPage == 2{
-                visitedPages[3] = false
             }else if currentPage == 0{
                 visitedPages[1] = false
             }
