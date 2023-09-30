@@ -34,15 +34,16 @@ struct tabbarContentView: View {
 //    @State private var selectedTab = 1
 
     var body: some View {
-        TabView {
-            HomeView()
-                .navigationTitle("Home")
-                .tabItem {
-                    Image(systemName: "1.circle")
-                    Text("Tab 1")
-                }
-                .tag(viewRouter.tbabarTag)
-        }
+        OnboardingView()
+//        TabView {
+//            HomeView()
+//                .navigationTitle("Home")
+//                .tabItem {
+//                    Image(systemName: "1.circle")
+//                    Text("Tab 1")
+//                }
+//                .tag(viewRouter.tbabarTag)
+//        }
 //        .onAppear {
 //            selectedTab = 1  // Initially select the second tab
 //        }

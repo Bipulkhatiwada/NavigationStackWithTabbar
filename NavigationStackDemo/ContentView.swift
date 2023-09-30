@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Route {
-    case view1
+    case OnboardingView
     case view2
     case view3
     case home
@@ -19,8 +19,8 @@ enum Route {
 struct Navigator {
     static func navigate<T: View>(route: Route, content: () -> T) -> AnyView {
         switch route {
-        case .view1:
-            return AnyView(View1())
+        case .OnboardingView:
+            return AnyView(OnboardingView())
         case .view2:
             return AnyView(View2())
         case .view3:
@@ -35,7 +35,7 @@ struct Navigator {
 }
 
 class ViewRouter: ObservableObject {
-    @Published var currentRoute: Route = .view1
+    @Published var currentRoute: Route = .OnboardingView
     @Published var popCLicked:Bool = false
     @Published var tbabarTag:Int = 0
 }
@@ -47,7 +47,7 @@ struct HomeView: View {
         TabView{
             if !viewRouter.popCLicked{
                 VStack {
-                    NavigationLink(destination: Navigator.navigate(route: .view1) {
+                    NavigationLink(destination: Navigator.navigate(route: .OnboardingView) {
                         Text("Go to View 1")
                     }) {
                         Text("View 1")
@@ -56,7 +56,7 @@ struct HomeView: View {
                 .navigationTitle("Home")
             }else{
                 VStack {
-                    NavigationLink(destination: Navigator.navigate(route: viewRouter.currentRoute == .view1 ? .view1: viewRouter.currentRoute) {
+                    NavigationLink(destination: Navigator.navigate(route: viewRouter.currentRoute == .OnboardingView ? .OnboardingView: viewRouter.currentRoute) {
                         Text("Go to View 1")
                     }) {
                         Text("View 1")
@@ -74,58 +74,28 @@ struct HomeView: View {
     }
 }
 
-//struct View1: View {
-//    init() {
-//        UIPageControl.appearance().currentPageIndicatorTintColor = .black
-//        UIPageControl.appearance().pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
-//
-//        UIPageControl.appearance().backgroundStyle = .prominent
-//        UIPageControl.appearance().preferredIndicatorImage = UIImage(named: "status")
-//        UIPageControl.appearance().backgroundColor = .clear
-//        UIPageControl.appearance().backgroundStyle = .minimal
-//    }
-//    var body: some View {
-//        TabView{
-//            Text("First")
-//            VStack {
-//                Text("Second")
-//                NavigationLink(destination: Navigator.navigate(route: .view2) {
-//                    Text("Go to View 2 from View 1")
-//                }) {
-//                    Text("Go to View 2")
-//                }
-//            }
-//            VStack {
-//                Text("Third")
-//                NavigationLink(destination: Navigator.navigate(route: .segemntedView) {
-//                    Text("Go to View 2 from View 1")
-//                }) {
-//                    Text("Go to Segmented View")
-//                }
-//            }
-//            .navigationBarTitle("View 1", displayMode: .inline)
-//
-//            Text("Fourth")
-//        }.tabViewStyle(.page)
-//            .indexViewStyle(.page(backgroundDisplayMode: .automatic))
-//    }
-//}
-
 struct CustomPageControl: View {
     var numberOfPages: Int
     var currentPage: Int
     var visitedPages: [Bool]
+    private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
             HStack(spacing: 8) {
                 ForEach(0..<numberOfPages) { index in
-                    Rectangle()
-                        .fill(visitedPages[index] || index == currentPage ? Color.black : Color.gray)
-    //                    .fill(index == currentPage ? Color.black : Color.gray)
-                        .frame(width: 110, height: 2)
+                    ZStack{
+                        Rectangle()
+                            .fill(visitedPages[index] || index == currentPage ? Color.black : Color.gray)
+        //                    .fill(index == currentPage ? Color.black : Color.gray)
+                            .frame(width: 110, height: 2)
+                    }.frame(width: 110, height: 2)
+                        .background(Color.red)
                 }
             }
         .padding()
+        .onReceive(timer) { _ in
+                // Update currentPage based on your logic here
+            }
     }
 }
 
@@ -138,9 +108,13 @@ struct PageModel: Identifiable{
 }
 
 
-struct View1: View {
+struct OnboardingView: View {
     @State private var currentPage = 0
     let numberOfPages = 3
+    
+    @State private var timer: Timer?
+
+    
     @State private var visitedPages = [true, false, false]
     
      var pages : [PageModel] = [
@@ -148,6 +122,13 @@ struct View1: View {
         PageModel(title: "Peer-to-peer", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "PayFriends", tag: 1),
         PageModel(title: "International Transfer (Cash-pickup, Wallet, Bank Transfer)", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "Handwithphone", tag: 2)
     ]
+    private func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+            if currentPage <= 1{
+                currentPage += 1
+            }
+        }
+    }
     
     var body: some View {
         VStack {
@@ -162,7 +143,7 @@ struct View1: View {
                                 .fontWeight(.heavy)
                             Text(pages[index].description ?? "").font(.subheadline).foregroundColor(Color.gray)
                         }
-                        .padding()
+                        .padding(.horizontal,16)
                         Image(pages[index].image ?? "")
                             .resizable()
                             .scaledToFit()
@@ -172,52 +153,6 @@ struct View1: View {
                     .tag(index)
                     
                 })
-                            
-//                VStack(){
-//                    VStack(alignment: .leading,spacing: 10){
-//                        Text("Add Money")
-//                            .font(.headline)
-//                            .fontWeight(.heavy)
-//                        Text("Load your wallet instantly from any funding source easily and conviniently").font(.subheadline).foregroundColor(Color.gray)
-//                    }
-//                    .padding()
-//                    Image("Welcome")
-//                        .resizable()
-//                        .scaledToFit()
-//                    Spacer()
-//
-//                }.tag(0)
-//                VStack(){
-//                    VStack(alignment: .leading,spacing: 10){
-//                        Text("Peer-to-peer")
-//                            .font(.headline)
-//                            .fontWeight(.heavy)
-//                        Text("Load your wallet instantly from any funding source easily and conviniently ")
-//                            .font(.subheadline).foregroundColor(Color.gray)
-//                    }
-//                    .padding()
-//                    Image("PayFriends")
-//                        .resizable()
-//                        .scaledToFit()
-//                    Spacer()
-//
-//                }.tag(1)
-//                VStack(){
-//                    VStack(alignment: .leading,spacing: 10){
-//                        Text("International Transfer (Cash-pickup, Wallet, Bank Transfer)")
-//                            .font(.headline)
-//                            .fontWeight(.heavy)
-//                        Text("Load your wallet instantly from any funding source easily and conviniently ")
-//                            .font(.subheadline).foregroundColor(Color.gray)
-//                    }
-//                    .padding()
-//                    Image("Handwithphone")
-//                        .resizable()
-//                        .scaledToFit()
-//                    Spacer()
-//
-//                }
-//                .tag(2)
                 
             }
             .tabViewStyle(.page)
@@ -245,8 +180,14 @@ struct View1: View {
             }
 
 
+        }.onAppear{
+//            startTimer()
         }
-        
+        .onTapGesture(count: 1) {
+            if currentPage <= 1{
+                currentPage += 1
+            }
+        }
         .onChange(of: currentPage) { newValue in
             print("newValue is: \(newValue) \n currentPage is: \(currentPage) \n visitedPages is: \(visitedPages) \n visitedPagesCount is: \(visitedPages.count) \n  ")
             visitedPages[newValue] = true
@@ -257,19 +198,20 @@ struct View1: View {
             }
         }
     }
+    
 }
 
 struct View2: View {
     var body: some View {
         VStack {
-            Text("View 2")
+            Text("HomeScreen")
             NavigationLink(destination: Navigator.navigate(route: .view3) {
                 Text("Go to View 3 from View 2")
             }) {
                 Text("Go to View 3")
             }
         }
-        .navigationBarTitle("View 2", displayMode: .inline)
+        .navigationBarTitle("Home Screen", displayMode: .inline)
     }
 }
 
@@ -297,7 +239,7 @@ struct View3: View {
 
 struct View1_Previews: PreviewProvider {
     static var previews: some View {
-        View1()
+        OnboardingView()
             .environmentObject(ViewRouter())
     }
 }
