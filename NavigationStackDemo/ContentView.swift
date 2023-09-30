@@ -78,26 +78,40 @@ struct CustomPageControl: View {
     var numberOfPages: Int
     var currentPage: Int
     var visitedPages: [Bool]
-    private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
             HStack(spacing: 8) {
                 ForEach(0..<numberOfPages) { index in
-                    ZStack{
-                        Rectangle()
-                            .fill(visitedPages[index] || index == currentPage ? Color.black : Color.gray)
-        //                    .fill(index == currentPage ? Color.black : Color.gray)
-                            .frame(width: 110, height: 2)
-                    }.frame(width: 110, height: 2)
-                        .background(Color.red)
-                }
+//                        Rectangle()
+//                            .fill(currentPage == 0 ? Color.black : Color.gray)
+//        //                    .fill(index == currentPage ? Color.black : Color.gray)
+//                            .frame(width: 110, height: 2)
+                        ZStack{
+                            Color.gray
+                                Rectangle()
+                                .fill(
+                                    LinearGradient(
+                                        gradient: currentPage == 0 ? Gradient(colors: [Color.black, Color.black]) : Gradient(colors: [Color.gray, Color.black]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                    .mask(
+                                        Rectangle()
+                                            .frame(width: visitedPages[index] || index == currentPage ? 110 : 0, height: 2)
+                                            .animation(currentPage > 0 ? .linear(duration: 4) : .linear(duration: 0))
+                                    )
+                                
+                        }.frame(width: 110, height: 2)
+                            
+                    }
+                   
+                }.padding()
             }
-        .padding()
-        .onReceive(timer) { _ in
-                // Update currentPage based on your logic here
-            }
+        
+        
     }
-}
+
 
 struct PageModel: Identifiable{
     var id = UUID()
@@ -123,7 +137,7 @@ struct OnboardingView: View {
         PageModel(title: "International Transfer (Cash-pickup, Wallet, Bank Transfer)", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "Handwithphone", tag: 2)
     ]
     private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
             if currentPage <= 1{
                 currentPage += 1
             }
@@ -181,13 +195,13 @@ struct OnboardingView: View {
 
 
         }.onAppear{
-//            startTimer()
+            startTimer()
         }
-        .onTapGesture(count: 1) {
-            if currentPage <= 1{
-                currentPage += 1
-            }
-        }
+//        .onTapGesture(count: 1) {
+//            if currentPage <= 1{
+//                currentPage += 1
+//            }
+//        }
         .onChange(of: currentPage) { newValue in
             print("newValue is: \(newValue) \n currentPage is: \(currentPage) \n visitedPages is: \(visitedPages) \n visitedPagesCount is: \(visitedPages.count) \n  ")
             visitedPages[newValue] = true
