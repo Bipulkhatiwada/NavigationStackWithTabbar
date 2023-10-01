@@ -76,7 +76,7 @@ struct HomeView: View {
 
 struct CustomPageControl: View {
     var numberOfPages: Int
-    var currentPage: Int
+    var currentPage: Int = 0
     var visitedPages: [Bool]
     
     var body: some View {
@@ -91,15 +91,14 @@ struct CustomPageControl: View {
                                 Rectangle()
                                 .fill(
                                     LinearGradient(
-                                        gradient: currentPage == 0 ? Gradient(colors: [Color.black, Color.black]) : Gradient(colors: [Color.gray, Color.black]),
+                                        gradient:Gradient(colors: [Color.gray, Color.black]),
                                         startPoint: .leading,
                                         endPoint: .trailing
                                     )
-                                )
-                                    .mask(
+                                ).mask(
                                         Rectangle()
                                             .frame(width: visitedPages[index] || index == currentPage ? 110 : 0, height: 2)
-                                            .animation(currentPage > 0 ? .linear(duration: 4) : .linear(duration: 0))
+                                            .animation(currentPage > 0 ? .linear(duration: 4) : .easeIn(duration: 0))
                                     )
                                 
                         }.frame(width: 110, height: 2)
