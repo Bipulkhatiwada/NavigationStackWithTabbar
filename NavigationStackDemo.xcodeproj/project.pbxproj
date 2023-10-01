@@ -7,22 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		292F654C2AC95F48002F79BE /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F654B2AC95F48002F79BE /* BottomSheet.swift */; };
 		29467B962AB9634C0051D4DE /* NavigationStackDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29467B952AB9634C0051D4DE /* NavigationStackDemoApp.swift */; };
 		29467B982AB9634C0051D4DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29467B972AB9634C0051D4DE /* ContentView.swift */; };
 		29467B9A2AB9634D0051D4DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29467B992AB9634D0051D4DE /* Assets.xcassets */; };
 		29467B9D2AB9634D0051D4DE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29467B9C2AB9634D0051D4DE /* Preview Assets.xcassets */; };
-		299B0A542AC923A500982759 /* CwalletLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 299B0A532AC923A500982759 /* CwalletLaunchScreen.storyboard */; };
+		299B0A572AC9277800982759 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 299B0A562AC9277800982759 /* LaunchScreen.storyboard */; };
+		299B0A5A2AC928F600982759 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B0A592AC928F600982759 /* LoginView.swift */; };
+		299B0A5D2AC94B7400982759 /* MaterialTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B0A5C2AC94B7400982759 /* MaterialTextField.swift */; };
 		29E314FD2AC4231100DE81C4 /* SegmentedVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E314FC2AC4231100DE81C4 /* SegmentedVIew.swift */; };
+		93170A0466047D6155D921A9 /* Pods_NavigationStackDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED350C3838C2742AD940B977 /* Pods_NavigationStackDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		292F654B2AC95F48002F79BE /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		29467B922AB9634C0051D4DE /* NavigationStackDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationStackDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29467B952AB9634C0051D4DE /* NavigationStackDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStackDemoApp.swift; sourceTree = "<group>"; };
 		29467B972AB9634C0051D4DE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		29467B992AB9634D0051D4DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29467B9C2AB9634D0051D4DE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		299B0A532AC923A500982759 /* CwalletLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CwalletLaunchScreen.storyboard; sourceTree = "<group>"; };
+		299B0A562AC9277800982759 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		299B0A592AC928F600982759 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		299B0A5C2AC94B7400982759 /* MaterialTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTextField.swift; sourceTree = "<group>"; };
 		29E314FC2AC4231100DE81C4 /* SegmentedVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedVIew.swift; sourceTree = "<group>"; };
+		8849BFFA77AFB246D9E3EB47 /* Pods-NavigationStackDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigationStackDemo.release.xcconfig"; path = "Target Support Files/Pods-NavigationStackDemo/Pods-NavigationStackDemo.release.xcconfig"; sourceTree = "<group>"; };
+		CCF744E98A1D1BE8C00C37FE /* Pods-NavigationStackDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigationStackDemo.debug.xcconfig"; path = "Target Support Files/Pods-NavigationStackDemo/Pods-NavigationStackDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		ED350C3838C2742AD940B977 /* Pods_NavigationStackDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NavigationStackDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93170A0466047D6155D921A9 /* Pods_NavigationStackDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +52,8 @@
 			children = (
 				29467B942AB9634C0051D4DE /* NavigationStackDemo */,
 				29467B932AB9634C0051D4DE /* Products */,
+				2A5842FB2440126CC55A137A /* Pods */,
+				4F43566BEFCA88CF5360ABEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,12 +68,14 @@
 		29467B942AB9634C0051D4DE /* NavigationStackDemo */ = {
 			isa = PBXGroup;
 			children = (
+				299B0A5B2AC94B5E00982759 /* MaterialTextFields */,
+				299B0A582AC928EB00982759 /* Views */,
 				29467B952AB9634C0051D4DE /* NavigationStackDemoApp.swift */,
 				29467B972AB9634C0051D4DE /* ContentView.swift */,
 				29467B992AB9634D0051D4DE /* Assets.xcassets */,
 				29467B9B2AB9634D0051D4DE /* Preview Content */,
 				29E314FC2AC4231100DE81C4 /* SegmentedVIew.swift */,
-				299B0A532AC923A500982759 /* CwalletLaunchScreen.storyboard */,
+				299B0A562AC9277800982759 /* LaunchScreen.storyboard */,
 			);
 			path = NavigationStackDemo;
 			sourceTree = "<group>";
@@ -73,6 +88,40 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		299B0A582AC928EB00982759 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				299B0A592AC928F600982759 /* LoginView.swift */,
+				292F654B2AC95F48002F79BE /* BottomSheet.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		299B0A5B2AC94B5E00982759 /* MaterialTextFields */ = {
+			isa = PBXGroup;
+			children = (
+				299B0A5C2AC94B7400982759 /* MaterialTextField.swift */,
+			);
+			path = MaterialTextFields;
+			sourceTree = "<group>";
+		};
+		2A5842FB2440126CC55A137A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CCF744E98A1D1BE8C00C37FE /* Pods-NavigationStackDemo.debug.xcconfig */,
+				8849BFFA77AFB246D9E3EB47 /* Pods-NavigationStackDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		4F43566BEFCA88CF5360ABEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED350C3838C2742AD940B977 /* Pods_NavigationStackDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -80,9 +129,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29467BA02AB9634D0051D4DE /* Build configuration list for PBXNativeTarget "NavigationStackDemo" */;
 			buildPhases = (
+				42AB43736915D225F8CAB952 /* [CP] Check Pods Manifest.lock */,
 				29467B8E2AB9634C0051D4DE /* Sources */,
 				29467B8F2AB9634C0051D4DE /* Frameworks */,
 				29467B902AB9634C0051D4DE /* Resources */,
+				28AE818858B76E3D61646022 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,13 +182,55 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				299B0A572AC9277800982759 /* LaunchScreen.storyboard in Resources */,
 				29467B9D2AB9634D0051D4DE /* Preview Assets.xcassets in Resources */,
-				299B0A542AC923A500982759 /* CwalletLaunchScreen.storyboard in Resources */,
 				29467B9A2AB9634D0051D4DE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		28AE818858B76E3D61646022 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NavigationStackDemo/Pods-NavigationStackDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NavigationStackDemo/Pods-NavigationStackDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NavigationStackDemo/Pods-NavigationStackDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		42AB43736915D225F8CAB952 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NavigationStackDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		29467B8E2AB9634C0051D4DE /* Sources */ = {
@@ -146,6 +239,9 @@
 			files = (
 				29E314FD2AC4231100DE81C4 /* SegmentedVIew.swift in Sources */,
 				29467B982AB9634C0051D4DE /* ContentView.swift in Sources */,
+				299B0A5D2AC94B7400982759 /* MaterialTextField.swift in Sources */,
+				299B0A5A2AC928F600982759 /* LoginView.swift in Sources */,
+				292F654C2AC95F48002F79BE /* BottomSheet.swift in Sources */,
 				29467B962AB9634C0051D4DE /* NavigationStackDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +365,7 @@
 		};
 		29467BA12AB9634D0051D4DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCF744E98A1D1BE8C00C37FE /* Pods-NavigationStackDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -280,7 +377,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14;
@@ -299,6 +396,7 @@
 		};
 		29467BA22AB9634D0051D4DE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8849BFFA77AFB246D9E3EB47 /* Pods-NavigationStackDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,7 +408,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14;

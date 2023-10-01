@@ -13,6 +13,7 @@ enum Route {
     case view3
     case home
     case segemntedView
+    case loginView
 
 }
 
@@ -29,6 +30,8 @@ struct Navigator {
             return AnyView(HomeView())
         case .segemntedView:
             return AnyView(SegmentedView())
+        case .loginView:
+            return AnyView(loginView())
         }
         
     }
@@ -171,7 +174,7 @@ struct OnboardingView: View {
             .tabViewStyle(.page)
                         .indexViewStyle(.page(backgroundDisplayMode: .automatic))
             
-            NavigationLink(destination: Navigator.navigate(route: .view2) {
+            NavigationLink(destination: Navigator.navigate(route: .loginView) {
                 Text("Go to View 1")
             }) {
                 Text("Get Started")
