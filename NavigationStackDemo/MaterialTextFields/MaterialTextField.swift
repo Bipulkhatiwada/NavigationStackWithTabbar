@@ -65,4 +65,29 @@ struct MDCFloatingButtonWrapper: UIViewRepresentable {
     }
 }
 
+class KeyboardHeightObservable: ObservableObject {
+    @Published var keyboardHeight: CGFloat = 0
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        NotificationCenter.Publisher(center: NotificationCenter.default, name: UIResponder.keyboardWillShowNotification)
+            .compactMap { notification in
+                return notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+            }
+            .map { rect in
+                return rect.height
+            }
+            .assign(to: \.keyboardHeight, on: self)
+            .store(in: &cancellables)
+        
+        NotificationCenter.Publisher(center: NotificationCenter.default, name: UIResponder.keyboardWillHideNotification)
+            .map { _ in
+                return CGFloat(0)
+            }
+            .assign(to: \.keyboardHeight, on: self)
+            .store(in: &cancellables)
+    }
+}
+
 

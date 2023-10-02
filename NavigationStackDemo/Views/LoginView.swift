@@ -22,10 +22,16 @@ struct loginView: View{
         "AU": "+61",  // Australia
         "IN": "+91"   // India
     ]
+    
+    @State var showPasswordFIeld = false
     @State private var selectedCountryCode: String? = nil
     @State private var phoneNumber: String = ""
+    @State private var password: String = ""
+    
     @State private var phNumberPlaceholder: String = "Enter your phone Number"
+    @State private var passwordPlaceholder: String = "Enter your phone Number"
     @State private var textFieldtTitle: String = "Phone"
+    @State private var passFieldtTitle: String = "password"
     
     @State private var username: String = ""
     @State private var usernamePlaceholder: String = "Enter your username"
@@ -51,6 +57,8 @@ struct loginView: View{
     @State private var titleDesc:String = "Enter your 10 digit phone number to get started"
     @State private var termsAndCondition:String = "By Continuing you agree to the Terms & Condition"
     
+    @ObservedObject var keyboardHeightObservable = KeyboardHeightObservable()
+    
     
     
     var languages:[String] = ["en","ne"]
@@ -69,6 +77,8 @@ struct loginView: View{
     }
     
     var body: some View{
+        
+        
         ScrollView{
             
             VStack{
@@ -80,36 +90,82 @@ struct loginView: View{
                         Text(titleDesc)
                             .font(.subheadline)
                     }.padding(.vertical,16)
+                    
+                    
+                    
                     VStack(spacing:158){
                         if usedCwalletTag == false{
-                            HStack{
-                                HStack(spacing: 0){
-                                    Image(systemName: countryCodeImage)
-                                        .foregroundColor(Color.black)
-                                        .padding(.leading,8)
-                                    Picker("Select Country Code", selection: $selectedCountryCode) {
-                                        ForEach(countryCodesArray, id: \.0) { countryCode, _ in
-                                            Text(countryCode).tag(countryCode as String?)
-                                        }
-                                    }.foregroundColor(Color.yellow)
-                                    .labelsHidden()
-                                }.frame(height: 55)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.yellow, lineWidth: 1)
-                                )
-                                .padding(.leading,16)
+                            VStack(spacing: 15){
                                 HStack{
-                                    MDCOutlinedTextFieldWrapper(text: $phoneNumber, Titletext: $textFieldtTitle, helperText: $helperText, placeHolder: $phNumberPlaceholder, textFieldType: $textFieldTypeOne)
+                                    HStack(spacing: 0){
+                                        Image(systemName: countryCodeImage)
+                                            .foregroundColor(Color.black)
+                                            .padding(.leading,8)
+                                        Picker("Select Country Code", selection: $selectedCountryCode) {
+                                            ForEach(countryCodesArray, id: \.0) { countryCode, _ in
+                                                Text(countryCode).tag(countryCode as String?)
+                                            }
+                                        }.foregroundColor(Color.yellow)
+                                            .labelsHidden()
+                                    }.frame(height: 55)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.yellow, lineWidth: 1)
+                                        )
+                                        .padding(.leading,16)
+                                    HStack{
+                                        //                                        MDCOutlinedTextFieldWrapper(text: $phoneNumber, Titletext: $textFieldtTitle, helperText: $helperText, placeHolder: $phNumberPlaceholder, textFieldType: $textFieldTypeOne)
+                                        TextField("Phone Number", text: $phoneNumber)
+                                            .keyboardType(.numberPad)
+                                            .padding()
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .stroke(Color.yellow, lineWidth: 1)
+                                            )
+                                        
+                                        
+                                    }
+                                    
+                                    .padding(.trailing,16)
                                     
                                 }
-                                
-                                .padding(.trailing,16)
-                                
+                                if showPasswordFIeld{
+                                    HStack{
+                                        //                                        MDCOutlinedTextFieldWrapper(text: $password, Titletext: $passFieldtTitle, helperText: $helperText, placeHolder: $passwordPlaceholder, textFieldType: $textFieldTypeTwo)
+                                        TextField("Password", text: $password)
+                                            .padding()
+                                            .textContentType(.password)
+//                                            .secureField("Password", text: $password)
+                                        .overlay(
+                                                Button(action: {
+                                                    password = ""  // Clear the password
+                                                }) {
+                                                    Image(systemName: "xmark.circle.fill")
+                                                        .foregroundColor(.gray)
+                                                        .padding(.trailing, 10)
+                                                }
+                                                    .opacity(password.isEmpty ? 0 : 1)  // Show the button only when there's text
+                                                    .animation(.none)
+                                                , alignment: .trailing
+                                            )
+                                            
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .stroke(Color.yellow, lineWidth: 1)
+                                            )
+                                        
+                                    }.padding()
+                                }
                             }
                         }else{
                             HStack{
-                                MDCOutlinedTextFieldWrapper(text: $username, Titletext: $usernametextFieldtTitle, helperText: $helperText, placeHolder: $usernamePlaceholder, textFieldType: $textFieldTypeTwo)
+                                //                                MDCOutlinedTextFieldWrapper(text: $username, Titletext: $usernametextFieldtTitle, helperText: $helperText, placeHolder: $usernamePlaceholder, textFieldType: $textFieldTypeTwo)
+                                TextField("Username", text: $username)
+                                    .padding()
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.yellow, lineWidth: 1)
+                                    )
                             }
                             .padding(.horizontal,16)
                             
@@ -117,20 +173,59 @@ struct loginView: View{
                         VStack(alignment: .leading, spacing:16){
                             Text(termsAndCondition).padding(.leading,16)
                             HStack{
-                                MDCFloatingButtonWrapper(buttonTitle: $walletTagTitle, bgColor: $cWalletTagBg).onTapGesture {
-                                    usedCwalletTag.toggle()
-                                    if usedCwalletTag == true{
-                                        walletTagTitle = "use Phone"
-                                    } else{
-                                        walletTagTitle = "use @CwalletTag"
-                                        
+                                //                                MDCFloatingButtonWrapper(buttonTitle: $walletTagTitle, bgColor: $cWalletTagBg)
+                                Text(walletTagTitle)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .foregroundColor(Color.black)
+                                
+                                    .frame(maxWidth: .infinity)
+                                    .background(
+                                        ZStack{
+                                            Rectangle()
+                                                .fill(Color.white)
+                                                .cornerRadius(12)
+                                                .shadow(radius: 14)
+                                            
+                                        }
+                                    )
+                                
+                                    .onTapGesture {
+                                        usedCwalletTag.toggle()
+                                        if usedCwalletTag == true{
+                                            walletTagTitle = "use Phone"
+                                        } else{
+                                            walletTagTitle = "use @CwalletTag"
+                                            
+                                        }
                                     }
+                                NavigationLink(destination: Navigator.navigate(route: .PinView) {
+                                    Text("")
+                                }) {
+                                    //                                    MDCFloatingButtonWrapper(buttonTitle: $ButtonTitle, bgColor: $NextBtnBg)
+                                    Text(ButtonTitle)
+                                        .frame(maxWidth: .infinity)
+                                        .padding()
+                                        .foregroundColor(Color.black)
+                                    
+                                        .frame(maxWidth: .infinity)
+                                        .background(
+                                            ZStack{
+                                                Rectangle()
+                                                    .fill(Color.yellow)
+                                                    .cornerRadius(12)
+                                                    .shadow(radius: 14)
+                                                
+                                            }
+                                        )
+                                    
                                 }
-                                MDCFloatingButtonWrapper(buttonTitle: $ButtonTitle, bgColor: $NextBtnBg).onTapGesture {
-                                    self.isBottomSheetPresented.toggle()
-                                }
-                            }.padding(16)
+                                
+                            }.padding(.horizontal,14)
+                            
                         }
+                        .padding(.bottom, keyboardHeightObservable.keyboardHeight)
+                        .edgesIgnoringSafeArea(.bottom)
                     }
                 }
             }
@@ -138,11 +233,11 @@ struct loginView: View{
         .navigationBarTitle("Login")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing:
-            Picker("Select Language", selection: $languageMode) {
-                ForEach(languages, id: \.self) { langMode in
-                    Text(langMode).tag(langMode as String?)
-                }
-            }.foregroundColor(Color.yellow)
+                                Picker("Select Language", selection: $languageMode) {
+            ForEach(languages, id: \.self) { langMode in
+                Text(langMode).tag(langMode as String?)
+            }
+        }.foregroundColor(Color.yellow)
             .labelsHidden()        )
         .gesture(
             TapGesture().onEnded {
@@ -155,40 +250,62 @@ struct loginView: View{
                 )
             }
         )
-
+        
         .overlay(
             BottomSheet(isPresented: $isBottomSheetPresented) {
-                // Content for the bottom sheet
-                Form{
-                    VStack(alignment: .center) {
-                        Image("CwalletLogo")
+                // Content for the botto sheet
+                VStack{
+                    Image(systemName: "gear")
+                        .resizable()
+                        .frame(width:100,height: 100)
+                    Image("Welcome to CWallet")
+                        .font(.subheadline)
+                    Button{
+                        isBottomSheetPresented = false
+                    }label: {
+                        HStack{
+                            Image(systemName: "xmark")
+                            Text("close")
+                                .underline()
+                        }
                     }
-                }
+                    
+                }.frame(maxWidth: .infinity)
+                
             }
+            
         )
+        .onChange(of: phoneNumber, perform: { phoneNumber in
+            print("(phoneNumber:::::)\(phoneNumber.count)")
+            if phoneNumber.count > 9{
+                showPasswordFIeld = true
+            }else{
+                showPasswordFIeld = false
+            }
+        })
         .onChange(of:selectedCountryCode ) { newCountryCode in
-                switch newCountryCode {
-                case "+1":
-                    countryCodeImage = "house"
-                case "+52":
-                    countryCodeImage = "globe"
-                case "+55":
-                    countryCodeImage = "flag"
-                case "+44":
-                    countryCodeImage = "square.and.arrow.down"
-                case "+33":
-                    countryCodeImage = "arrow.up.and.down"
-                case "+49":
-                    countryCodeImage = "flag.circle"
-                case "+81":
-                    countryCodeImage = "phone"
-                case "+61":
-                    countryCodeImage = "star"
-                case "+91":
-                    countryCodeImage = "bell"
-                default:
-                    countryCodeImage = "questionmark"
-                }
+            switch newCountryCode {
+            case "+1":
+                countryCodeImage = "house"
+            case "+52":
+                countryCodeImage = "globe"
+            case "+55":
+                countryCodeImage = "flag"
+            case "+44":
+                countryCodeImage = "square.and.arrow.down"
+            case "+33":
+                countryCodeImage = "arrow.up.and.down"
+            case "+49":
+                countryCodeImage = "flag.circle"
+            case "+81":
+                countryCodeImage = "phone"
+            case "+61":
+                countryCodeImage = "star"
+            case "+91":
+                countryCodeImage = "bell"
+            default:
+                countryCodeImage = "questionmark"
+            }
         }
         .onChange(of: languageMode) { langMode in
             switch langMode{
@@ -201,7 +318,7 @@ struct loginView: View{
             default:break
                 
             }
-        }
+        }.navigationBarBackButtonHidden()
         
     }
 }

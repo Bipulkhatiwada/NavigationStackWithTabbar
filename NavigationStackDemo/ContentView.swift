@@ -9,11 +9,12 @@ import SwiftUI
 
 enum Route {
     case OnboardingView
-    case view2
+    case PinView
     case view3
     case home
     case segemntedView
     case loginView
+    case listView
 
 }
 
@@ -22,8 +23,8 @@ struct Navigator {
         switch route {
         case .OnboardingView:
             return AnyView(OnboardingView())
-        case .view2:
-            return AnyView(View2())
+        case .PinView:
+            return AnyView(PinView())
         case .view3:
             return AnyView(View3())
         case .home:
@@ -32,6 +33,8 @@ struct Navigator {
             return AnyView(SegmentedView())
         case .loginView:
             return AnyView(loginView())
+        case .listView:
+            return AnyView(ListView())
         }
         
     }
@@ -217,7 +220,7 @@ struct OnboardingView: View {
     
 }
 
-struct View2: View {
+struct PinView: View {
     var body: some View {
         VStack {
             Text("HomeScreen")
