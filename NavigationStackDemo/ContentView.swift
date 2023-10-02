@@ -24,7 +24,7 @@ struct Navigator {
         case .OnboardingView:
             return AnyView(OnboardingView())
         case .PinView:
-            return AnyView(PinView())
+            return AnyView(EmptyView())
         case .view3:
             return AnyView(View3())
         case .home:
@@ -200,7 +200,7 @@ struct OnboardingView: View {
 
 
         }.onAppear{
-            startTimer()
+//            startTimer()
         }
 //        .onTapGesture(count: 1) {
 //            if currentPage <= 1{
@@ -218,20 +218,6 @@ struct OnboardingView: View {
         }
     }
     
-}
-
-struct PinView: View {
-    var body: some View {
-        VStack {
-            Text("HomeScreen")
-            NavigationLink(destination: Navigator.navigate(route: .view3) {
-                Text("Go to View 3 from View 2")
-            }) {
-                Text("Go to View 3")
-            }
-        }
-        .navigationBarTitle("Home Screen", displayMode: .inline)
-    }
 }
 
 struct View3: View {

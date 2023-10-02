@@ -1,4 +1,5 @@
 PODS:
+  - DPOTPView (1.5.12)
   - MaterialComponents (124.2.0):
     - MaterialComponents/ActionSheet (= 124.2.0)
     - "MaterialComponents/ActionSheet+Theming (= 124.2.0)"
@@ -644,25 +645,38 @@ PODS:
   - MotionAnimator (4.0.1):
     - MotionInterchange (~> 3.0)
   - MotionInterchange (3.0.0)
+  - SDWebImage (5.18.2):
+    - SDWebImage/Core (= 5.18.2)
+  - SDWebImage/Core (5.18.2)
+  - SDWebImageSwiftUI (2.2.3):
+    - SDWebImage (~> 5.10)
 
 DEPENDENCIES:
+  - DPOTPView
   - MaterialComponents
+  - SDWebImageSwiftUI
 
 SPEC REPOS:
   trunk:
+    - DPOTPView
     - MaterialComponents
     - MDFInternationalization
     - MDFTextAccessibility
     - MotionAnimator
     - MotionInterchange
+    - SDWebImage
+    - SDWebImageSwiftUI
 
 SPEC CHECKSUMS:
+  DPOTPView: 28d8a0a84a2ff4b1e4a7712065aba1cbb14e2704
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
   MDFInternationalization: d697c55307816222a55685c4ccb1044ffb030c12
   MDFTextAccessibility: f4bb4cc2194286651b59a215fdeaa0e05dc90ba5
   MotionAnimator: 5f99d7c9592928c0f28a66283eda9c3b657dc480
   MotionInterchange: 13adae439b377e31d1674cc165539d50e1d1566a
+  SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
+  SDWebImageSwiftUI: 17396b7889f9abc27231caaeb64c537564284aab
 
-PODFILE CHECKSUM: f850c9c7a618dc66da23a5ea423bb163af058021
+PODFILE CHECKSUM: 77ca9d221fb5b0004aec125e09ed4041a03e5678
 
 COCOAPODS: 1.12.0

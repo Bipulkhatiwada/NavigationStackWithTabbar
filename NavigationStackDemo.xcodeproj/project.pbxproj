@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		292F654C2AC95F48002F79BE /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F654B2AC95F48002F79BE /* BottomSheet.swift */; };
 		292F654E2ACAB300002F79BE /* ListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F654D2ACAB300002F79BE /* ListVIew.swift */; };
+		292F65532ACACDC9002F79BE /* PinVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F65522ACACDC9002F79BE /* PinVIew.swift */; };
 		29467B962AB9634C0051D4DE /* NavigationStackDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29467B952AB9634C0051D4DE /* NavigationStackDemoApp.swift */; };
 		29467B982AB9634C0051D4DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29467B972AB9634C0051D4DE /* ContentView.swift */; };
 		29467B9A2AB9634D0051D4DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29467B992AB9634D0051D4DE /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		292F654B2AC95F48002F79BE /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		292F654D2ACAB300002F79BE /* ListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVIew.swift; sourceTree = "<group>"; };
+		292F65522ACACDC9002F79BE /* PinVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinVIew.swift; sourceTree = "<group>"; };
 		29467B922AB9634C0051D4DE /* NavigationStackDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationStackDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29467B952AB9634C0051D4DE /* NavigationStackDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStackDemoApp.swift; sourceTree = "<group>"; };
 		29467B972AB9634C0051D4DE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				299B0A592AC928F600982759 /* LoginView.swift */,
 				292F654B2AC95F48002F79BE /* BottomSheet.swift */,
 				292F654D2ACAB300002F79BE /* ListVIew.swift */,
+				292F65522ACACDC9002F79BE /* PinVIew.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -143,6 +146,8 @@
 			dependencies = (
 			);
 			name = NavigationStackDemo;
+			packageProductDependencies = (
+			);
 			productName = NavigationStackDemo;
 			productReference = 29467B922AB9634C0051D4DE /* NavigationStackDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -171,6 +176,8 @@
 				Base,
 			);
 			mainGroup = 29467B892AB9634C0051D4DE;
+			packageReferences = (
+			);
 			productRefGroup = 29467B932AB9634C0051D4DE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -242,6 +249,7 @@
 			files = (
 				29E314FD2AC4231100DE81C4 /* SegmentedVIew.swift in Sources */,
 				29467B982AB9634C0051D4DE /* ContentView.swift in Sources */,
+				292F65532ACACDC9002F79BE /* PinVIew.swift in Sources */,
 				292F654E2ACAB300002F79BE /* ListVIew.swift in Sources */,
 				299B0A5D2AC94B7400982759 /* MaterialTextField.swift in Sources */,
 				299B0A5A2AC928F600982759 /* LoginView.swift in Sources */,

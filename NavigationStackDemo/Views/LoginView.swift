@@ -23,6 +23,7 @@ struct loginView: View{
         "IN": "+91"   // India
     ]
     
+    @State private var isSheetPresented = false
     @State var showPasswordFIeld = false
     @State private var selectedCountryCode: String? = nil
     @State private var phoneNumber: String = ""
@@ -199,9 +200,9 @@ struct loginView: View{
                                             
                                         }
                                     }
-                                NavigationLink(destination: Navigator.navigate(route: .PinView) {
-                                    Text("")
-                                }) {
+                                Button{
+                                  isSheetPresented = true
+                                } label:{
                                     //                                    MDCFloatingButtonWrapper(buttonTitle: $ButtonTitle, bgColor: $NextBtnBg)
                                     Text(ButtonTitle)
                                         .frame(maxWidth: .infinity)
@@ -258,8 +259,8 @@ struct loginView: View{
                     Image(systemName: "gear")
                         .resizable()
                         .frame(width:100,height: 100)
-                    Image("Welcome to CWallet")
-                        .font(.subheadline)
+//                    Image("Welcome to CWallet")
+//                        .font(.subheadline)
                     Button{
                         isBottomSheetPresented = false
                     }label: {
@@ -275,6 +276,10 @@ struct loginView: View{
             }
             
         )
+        .fullScreenCover(isPresented: $isSheetPresented, content: {
+            PinView(isSheetPresented: $isSheetPresented)
+        })
+
         .onChange(of: phoneNumber, perform: { phoneNumber in
             print("(phoneNumber:::::)\(phoneNumber.count)")
             if phoneNumber.count > 9{

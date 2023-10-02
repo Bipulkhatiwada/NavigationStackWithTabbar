@@ -7,6 +7,7 @@ target 'NavigationStackDemo' do
 
   # Pods for NavigationStackDemo
   pod 'MaterialComponents'
-
+  pod 'DPOTPView'
+  pod 'SDWebImageSwiftUI'
 
 end
