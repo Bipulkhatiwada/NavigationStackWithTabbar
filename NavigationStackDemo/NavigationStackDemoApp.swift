@@ -12,7 +12,7 @@ struct NavigationStackDemoApp: App {
     init() {
          // Customize navigation bar appearance
          let appearance = UINavigationBarAppearance()
-        appearance.setBackIndicatorImage(UIImage(systemName: "arrow.left.circle.fill"), transitionMaskImage: UIImage(systemName: "arrow.left.circle.fill"))
+        appearance.setBackIndicatorImage(UIImage(systemName: "arrow.left.square.fill"), transitionMaskImage: UIImage(systemName: "arrow.left.square.fill"))
          appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.yellow]
          UINavigationBar.appearance().scrollEdgeAppearance = appearance
      }
@@ -22,6 +22,7 @@ struct NavigationStackDemoApp: App {
                 tabbarContentView()
             }.environmentObject(ViewRouter())
 //                .toolbarRole(.editor)
+                .accentColor(.yellow)
             
         }
     }
@@ -47,9 +48,12 @@ struct tabbarContentView: View {
 //        }
     }
 }
+
+
 extension UINavigationController{
     open override func viewWillLayoutSubviews() {
         navigationBar.topItem?.backButtonDisplayMode = .minimal
-        navigationBar.tintColor = .systemYellow
+//        navigationBar.tintColor = .systemYellow
+//        navigationBar.barTintColor = .systemYellow
     }
 }

@@ -199,7 +199,7 @@ struct OnboardingView: View {
             
             
         }.onAppear{
-            startTimer()
+//            startTimer()
         }
         //        .onTapGesture(count: 1) {
         //            if currentPage <= 1{

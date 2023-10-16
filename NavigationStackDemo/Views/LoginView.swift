@@ -204,24 +204,29 @@ struct loginView: View{
                                             }
                                         }
                                     Button{
-                                        isSheetPresented = true
+                                        isSheetPresented = false
                                     } label:{
-                                        //                                    MDCFloatingButtonWrapper(buttonTitle: $ButtonTitle, bgColor: $NextBtnBg)
-                                        Text(ButtonTitle)
-                                            .frame(maxWidth: .infinity)
-                                            .padding()
-                                            .foregroundColor(Color.black)
+                                        NavigationLink(destination: Navigator.navigate(route: .view3) {
+                                            Text("Go to View 1")
+                                        }) {
+                                            Text(ButtonTitle)
+                                                .frame(maxWidth: .infinity)
+                                                .padding()
+                                                .foregroundColor(Color.black)
+                                            
+                                                .frame(maxWidth: .infinity)
+                                                .background(
+                                                    ZStack{
+                                                        Rectangle()
+                                                            .fill(Color.yellow)
+                                                            .cornerRadius(12)
+                                                            .shadow(radius: 14)
+                                                        
+                                                    }
+                                                )
+                                        }
+
                                         
-                                            .frame(maxWidth: .infinity)
-                                            .background(
-                                                ZStack{
-                                                    Rectangle()
-                                                        .fill(Color.yellow)
-                                                        .cornerRadius(12)
-                                                        .shadow(radius: 14)
-                                                    
-                                                }
-                                            )
                                         
                                     }
                                     
@@ -249,7 +254,7 @@ struct loginView: View{
             .labelsHidden()        )
         .gesture(
             TapGesture().onEnded {
-//                self.isBottomSheetPresented = false
+                self.isBottomSheetPresented = false
 //                UIApplication.shared.sendAction(
 //                    #selector(UIResponder.resignFirstResponder),
 //                    to: nil,
