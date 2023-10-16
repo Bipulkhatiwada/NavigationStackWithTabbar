@@ -15,7 +15,7 @@ enum Route {
     case segemntedView
     case loginView
     case listView
-
+    
 }
 
 struct Navigator {
@@ -70,7 +70,7 @@ struct HomeView: View {
                 }.onAppear{
                     //                    viewRouter.currentRoute = .view1
                 }
-                                
+                
             }
         }
         .tabItem {
@@ -86,36 +86,36 @@ struct CustomPageControl: View {
     var visitedPages: [Bool]
     
     var body: some View {
-            HStack(spacing: 8) {
-                ForEach(0..<numberOfPages) { index in
-//                        Rectangle()
-//                            .fill(currentPage == 0 ? Color.black : Color.gray)
-//        //                    .fill(index == currentPage ? Color.black : Color.gray)
-//                            .frame(width: 110, height: 2)
-                        ZStack{
-                            Color.gray
-                                Rectangle()
-                                .fill(
-                                    LinearGradient(
-                                        gradient:Gradient(colors: [Color.gray, Color.black]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                ).mask(
-                                        Rectangle()
-                                            .frame(width: visitedPages[index] || index == currentPage ? 110 : 0, height: 2)
-                                            .animation(currentPage > 0 ? .linear(duration: 4) : .easeIn(duration: 0))
-                                    )
-                                
-                        }.frame(width: 110, height: 2)
-                            
-                    }
-                   
-                }.padding()
+        HStack(spacing: 8) {
+            ForEach(0..<numberOfPages) { index in
+                //                        Rectangle()
+                //                            .fill(currentPage == 0 ? Color.black : Color.gray)
+                //        //                    .fill(index == currentPage ? Color.black : Color.gray)
+                //                            .frame(width: 110, height: 2)
+                ZStack{
+                    Color.gray
+                    Rectangle()
+                        .fill(
+                            LinearGradient(
+                                gradient:Gradient(colors: [Color.black, Color.black]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        ).mask(
+                            Rectangle()
+                                .frame(width: visitedPages[index] || index == currentPage ? 110 : 0, height: 2)
+                                .animation(currentPage > 0 ? .linear(duration: 4) : .easeIn(duration: 0))
+                        )
+                    
+                }.frame(width: 110, height: 2)
+                
             }
-        
-        
+            
+        }.padding()
     }
+    
+    
+}
 
 
 struct PageModel: Identifiable{
@@ -132,11 +132,11 @@ struct OnboardingView: View {
     let numberOfPages = 3
     
     @State private var timer: Timer?
-
+    
     
     @State private var visitedPages = [true, false, false]
     
-     var pages : [PageModel] = [
+    var pages : [PageModel] = [
         PageModel(title: "Add Money", description: "Load your wallet instantly from any funding source easily and conviniently", image: "Welcome", tag: 0),
         PageModel(title: "Peer-to-peer", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "PayFriends", tag: 1),
         PageModel(title: "International Transfer (Cash-pickup, Wallet, Bank Transfer)", description: "Load your wallet instantly from any funding source easily and conviniently ", image: "Handwithphone", tag: 2)
@@ -175,7 +175,7 @@ struct OnboardingView: View {
                 
             }
             .tabViewStyle(.page)
-                        .indexViewStyle(.page(backgroundDisplayMode: .automatic))
+            .indexViewStyle(.page(backgroundDisplayMode: .automatic))
             
             NavigationLink(destination: Navigator.navigate(route: .loginView) {
                 Text("Go to View 1")
@@ -184,7 +184,6 @@ struct OnboardingView: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color.black)
-                
                     .frame(maxWidth: .infinity)
                     .background(
                         ZStack{
@@ -197,16 +196,16 @@ struct OnboardingView: View {
                     .padding()
                 
             }
-
-
+            
+            
         }.onAppear{
-//            startTimer()
+            startTimer()
         }
-//        .onTapGesture(count: 1) {
-//            if currentPage <= 1{
-//                currentPage += 1
-//            }
-//        }
+        //        .onTapGesture(count: 1) {
+        //            if currentPage <= 1{
+        //                currentPage += 1
+        //            }
+        //        }
         .onChange(of: currentPage) { newValue in
             print("newValue is: \(newValue) \n currentPage is: \(currentPage) \n visitedPages is: \(visitedPages) \n visitedPagesCount is: \(visitedPages.count) \n  ")
             visitedPages[newValue] = true
@@ -215,6 +214,10 @@ struct OnboardingView: View {
             }else if currentPage == 0{
                 visitedPages[1] = false
             }
+            //            if currentPage == 2{
+            //                currentPage = 0
+            //                visitedPages = [true, false, false]
+            //            }
         }
     }
     

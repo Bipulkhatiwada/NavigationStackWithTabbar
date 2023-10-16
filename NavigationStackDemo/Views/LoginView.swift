@@ -58,7 +58,7 @@ struct loginView: View{
     @State private var titleDesc:String = "Enter your 10 digit phone number to get started"
     @State private var termsAndCondition:String = "By Continuing you agree to the Terms & Condition"
     
-    @ObservedObject var keyboardHeightObservable = KeyboardHeightObservable()
+    //    @ObservedObject var keyboardHeightObservable = KeyboardHeightObservable()
     
     
     
@@ -80,131 +80,105 @@ struct loginView: View{
     var body: some View{
         
         
-        ScrollView{
-            
-            VStack{
+        ZStack{
+            ScrollView{
+                
                 VStack{
-                    VStack(alignment: .leading,spacing: 8){
-                        Text("Phone")
-                            .font(.largeTitle)
-                            .fontWeight(.heavy)
-                        Text(titleDesc)
-                            .font(.subheadline)
-                    }.padding(.vertical,16)
-                    
-                    
-                    
-                    VStack(spacing:158){
-                        if usedCwalletTag == false{
-                            VStack(spacing: 15){
+                    VStack{
+                        VStack(alignment: .leading,spacing: 8){
+                            Text("Phone")
+                                .font(.largeTitle)
+                                .fontWeight(.heavy)
+                            Text(titleDesc)
+                                .font(.subheadline)
+                        }.padding(.vertical,16)
+                        
+                        
+                        
+                        VStack(spacing:158){
+                            if usedCwalletTag == false{
+                                VStack(spacing: 15){
+                                    HStack{
+                                        HStack(spacing: 0){
+                                            Image(systemName: countryCodeImage)
+                                                .foregroundColor(Color.black)
+                                                .padding(.leading,8)
+                                            Picker("Select Country Code", selection: $selectedCountryCode) {
+                                                ForEach(countryCodesArray, id: \.0) { countryCode, _ in
+                                                    Text(countryCode).tag(countryCode as String?)
+                                                }
+                                            }.foregroundColor(Color.yellow)
+                                                .labelsHidden()
+                                        }.frame(height: 55)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .stroke(Color.yellow, lineWidth: 1)
+                                            )
+                                            .padding(.leading,16)
+                                        HStack{
+                                            //                                        MDCOutlinedTextFieldWrapper(text: $phoneNumber, Titletext: $textFieldtTitle, helperText: $helperText, placeHolder: $phNumberPlaceholder, textFieldType: $textFieldTypeOne)
+                                            TextField("Phone Number", text: $phoneNumber)
+                                                .keyboardType(.numberPad)
+                                                .padding()
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color.yellow, lineWidth: 1)
+                                                )
+                                            
+                                            
+                                        }
+                                        
+                                        .padding(.trailing,16)
+                                        
+                                    }
+                                    if showPasswordFIeld{
+                                        HStack{
+                                            //                                        MDCOutlinedTextFieldWrapper(text: $password, Titletext: $passFieldtTitle, helperText: $helperText, placeHolder: $passwordPlaceholder, textFieldType: $textFieldTypeTwo)
+                                            TextField("Password", text: $password)
+                                                .padding()
+                                                .textContentType(.password)
+                                            //                                            .secureField("Password", text: $password)
+                                                .overlay(
+                                                    Button(action: {
+                                                        password = ""  // Clear the password
+                                                    }) {
+                                                        Image(systemName: "xmark.circle.fill")
+                                                            .foregroundColor(.gray)
+                                                            .padding(.trailing, 10)
+                                                    }
+                                                        .opacity(password.isEmpty ? 0 : 1)  // Show the button only when there's text
+                                                        .animation(.none)
+                                                    , alignment: .trailing
+                                                )
+                                            
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color.yellow, lineWidth: 1)
+                                                )
+                                            
+                                        }.padding()
+                                    }
+                                }
+                            }else{
                                 HStack{
-                                    HStack(spacing: 0){
-                                        Image(systemName: countryCodeImage)
-                                            .foregroundColor(Color.black)
-                                            .padding(.leading,8)
-                                        Picker("Select Country Code", selection: $selectedCountryCode) {
-                                            ForEach(countryCodesArray, id: \.0) { countryCode, _ in
-                                                Text(countryCode).tag(countryCode as String?)
-                                            }
-                                        }.foregroundColor(Color.yellow)
-                                            .labelsHidden()
-                                    }.frame(height: 55)
+                                    //                                MDCOutlinedTextFieldWrapper(text: $username, Titletext: $usernametextFieldtTitle, helperText: $helperText, placeHolder: $usernamePlaceholder, textFieldType: $textFieldTypeTwo)
+                                    TextField("Username", text: $username)
+                                        .padding()
                                         .background(
                                             RoundedRectangle(cornerRadius: 8)
                                                 .stroke(Color.yellow, lineWidth: 1)
                                         )
-                                        .padding(.leading,16)
-                                    HStack{
-                                        //                                        MDCOutlinedTextFieldWrapper(text: $phoneNumber, Titletext: $textFieldtTitle, helperText: $helperText, placeHolder: $phNumberPlaceholder, textFieldType: $textFieldTypeOne)
-                                        TextField("Phone Number", text: $phoneNumber)
-                                            .keyboardType(.numberPad)
-                                            .padding()
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 8)
-                                                    .stroke(Color.yellow, lineWidth: 1)
-                                            )
-                                        
-                                        
-                                    }
-                                    
-                                    .padding(.trailing,16)
-                                    
                                 }
-                                if showPasswordFIeld{
-                                    HStack{
-                                        //                                        MDCOutlinedTextFieldWrapper(text: $password, Titletext: $passFieldtTitle, helperText: $helperText, placeHolder: $passwordPlaceholder, textFieldType: $textFieldTypeTwo)
-                                        TextField("Password", text: $password)
-                                            .padding()
-                                            .textContentType(.password)
-//                                            .secureField("Password", text: $password)
-                                        .overlay(
-                                                Button(action: {
-                                                    password = ""  // Clear the password
-                                                }) {
-                                                    Image(systemName: "xmark.circle.fill")
-                                                        .foregroundColor(.gray)
-                                                        .padding(.trailing, 10)
-                                                }
-                                                    .opacity(password.isEmpty ? 0 : 1)  // Show the button only when there's text
-                                                    .animation(.none)
-                                                , alignment: .trailing
-                                            )
-                                            
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 8)
-                                                    .stroke(Color.yellow, lineWidth: 1)
-                                            )
-                                        
-                                    }.padding()
-                                }
-                            }
-                        }else{
-                            HStack{
-                                //                                MDCOutlinedTextFieldWrapper(text: $username, Titletext: $usernametextFieldtTitle, helperText: $helperText, placeHolder: $usernamePlaceholder, textFieldType: $textFieldTypeTwo)
-                                TextField("Username", text: $username)
-                                    .padding()
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.yellow, lineWidth: 1)
-                                    )
-                            }
-                            .padding(.horizontal,16)
-                            
-                        }
-                        VStack(alignment: .leading, spacing:16){
-                            Text(termsAndCondition).padding(.leading,16)
-                            HStack{
-                                //                                MDCFloatingButtonWrapper(buttonTitle: $walletTagTitle, bgColor: $cWalletTagBg)
-                                Text(walletTagTitle)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .foregroundColor(Color.black)
+                                .padding(.horizontal,16)
                                 
-                                    .frame(maxWidth: .infinity)
-                                    .background(
-                                        ZStack{
-                                            Rectangle()
-                                                .fill(Color.white)
-                                                .cornerRadius(12)
-                                                .shadow(radius: 14)
-                                            
-                                        }
-                                    )
+                            }
+                            Spacer()
+                            VStack(alignment: .leading, spacing:16){
                                 
-                                    .onTapGesture {
-                                        usedCwalletTag.toggle()
-                                        if usedCwalletTag == true{
-                                            walletTagTitle = "use Phone"
-                                        } else{
-                                            walletTagTitle = "use @CwalletTag"
-                                            
-                                        }
-                                    }
-                                Button{
-                                  isSheetPresented = true
-                                } label:{
-                                    //                                    MDCFloatingButtonWrapper(buttonTitle: $ButtonTitle, bgColor: $NextBtnBg)
-                                    Text(ButtonTitle)
+                                Text(termsAndCondition).padding(.leading,16)
+                                HStack{
+                                    //                                MDCFloatingButtonWrapper(buttonTitle: $walletTagTitle, bgColor: $cWalletTagBg)
+                                    Text(walletTagTitle)
                                         .frame(maxWidth: .infinity)
                                         .padding()
                                         .foregroundColor(Color.black)
@@ -213,23 +187,56 @@ struct loginView: View{
                                         .background(
                                             ZStack{
                                                 Rectangle()
-                                                    .fill(Color.yellow)
+                                                    .fill(Color.white)
                                                     .cornerRadius(12)
                                                     .shadow(radius: 14)
                                                 
                                             }
                                         )
                                     
-                                }
+                                        .onTapGesture {
+                                            usedCwalletTag.toggle()
+                                            if usedCwalletTag == true{
+                                                walletTagTitle = "use Phone"
+                                            } else{
+                                                walletTagTitle = "use @CwalletTag"
+                                                
+                                            }
+                                        }
+                                    Button{
+                                        isSheetPresented = true
+                                    } label:{
+                                        //                                    MDCFloatingButtonWrapper(buttonTitle: $ButtonTitle, bgColor: $NextBtnBg)
+                                        Text(ButtonTitle)
+                                            .frame(maxWidth: .infinity)
+                                            .padding()
+                                            .foregroundColor(Color.black)
+                                        
+                                            .frame(maxWidth: .infinity)
+                                            .background(
+                                                ZStack{
+                                                    Rectangle()
+                                                        .fill(Color.yellow)
+                                                        .cornerRadius(12)
+                                                        .shadow(radius: 14)
+                                                    
+                                                }
+                                            )
+                                        
+                                    }
+                                    
+                                }.padding(.horizontal,14)
                                 
-                            }.padding(.horizontal,14)
-                            
+                            }
+                            //                        .padding(.bottom, keyboardHeightObservable.keyboardHeight)
+                            .edgesIgnoringSafeArea(.bottom)
                         }
-                        .padding(.bottom, keyboardHeightObservable.keyboardHeight)
-                        .edgesIgnoringSafeArea(.bottom)
                     }
                 }
+                
             }
+            .ignoresSafeArea(.keyboard)
+
         }
         .navigationBarTitle("Login")
         .navigationBarTitleDisplayMode(.inline)
@@ -242,13 +249,15 @@ struct loginView: View{
             .labelsHidden()        )
         .gesture(
             TapGesture().onEnded {
-                self.isBottomSheetPresented = false
-                UIApplication.shared.sendAction(
-                    #selector(UIResponder.resignFirstResponder),
-                    to: nil,
-                    from: nil,
-                    for: nil
-                )
+//                self.isBottomSheetPresented = false
+//                UIApplication.shared.sendAction(
+//                    #selector(UIResponder.resignFirstResponder),
+//                    to: nil,
+//                    from: nil,
+//                    for: nil
+//                )
+                
+                
             }
         )
         
@@ -259,8 +268,8 @@ struct loginView: View{
                     Image(systemName: "gear")
                         .resizable()
                         .frame(width:100,height: 100)
-//                    Image("Welcome to CWallet")
-//                        .font(.subheadline)
+                    //                    Image("Welcome to CWallet")
+                    //                        .font(.subheadline)
                     Button{
                         isBottomSheetPresented = false
                     }label: {
@@ -279,7 +288,7 @@ struct loginView: View{
         .fullScreenCover(isPresented: $isSheetPresented, content: {
             PinView(isSheetPresented: $isSheetPresented)
         })
-
+        
         .onChange(of: phoneNumber, perform: { phoneNumber in
             print("(phoneNumber:::::)\(phoneNumber.count)")
             if phoneNumber.count > 9{

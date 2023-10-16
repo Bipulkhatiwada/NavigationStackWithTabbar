@@ -15,7 +15,7 @@ import Combine
 enum TextFieldType{
     case phoneNumber
     case none
-}
+} 
 
 struct MDCOutlinedTextFieldWrapper: UIViewRepresentable {
     @Binding var text: String
@@ -24,7 +24,7 @@ struct MDCOutlinedTextFieldWrapper: UIViewRepresentable {
     @Binding var placeHolder: String
     @Binding var textFieldType: TextFieldType
     
-
+    
     func makeUIView(context: Context) -> MDCOutlinedTextField {
         let textField = MDCOutlinedTextField()
         textField.label.text = Titletext
@@ -32,11 +32,11 @@ struct MDCOutlinedTextFieldWrapper: UIViewRepresentable {
         textField.leadingAssistiveLabel.text = helperText
         textField.setFloatingLabelColor(UIColor.systemYellow, for: .normal)
         textField.layer.borderColor = UIColor.systemYellow.cgColor
-
+        
         textField.sizeToFit()
         return textField
     }
-
+    
     func updateUIView(_ uiView: MDCOutlinedTextField, context: Context) {
         uiView.text = text
         uiView.tintColor = UIColor.systemYellow
@@ -50,7 +50,7 @@ struct MDCOutlinedTextFieldWrapper: UIViewRepresentable {
 struct MDCFloatingButtonWrapper: UIViewRepresentable {
     @Binding var buttonTitle: String
     @Binding var bgColor: UIColor
-
+    
     func makeUIView(context: Context) -> MDCFloatingButton {
         let button = MDCFloatingButton()
         button.setTitle(buttonTitle, for: .normal)
@@ -59,7 +59,7 @@ struct MDCFloatingButtonWrapper: UIViewRepresentable {
         button.sizeToFit()
         return button
     }
-
+    
     func updateUIView(_ uiView: MDCFloatingButton, context: Context) {
         // Update button properties if needed
     }
@@ -87,6 +87,34 @@ class KeyboardHeightObservable: ObservableObject {
             }
             .assign(to: \.keyboardHeight, on: self)
             .store(in: &cancellables)
+    }
+}
+
+struct FloatingButton<Content: View>: View {
+    let action: () -> Void
+    let content: Content
+    
+    init(action: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+        self.action = action
+        self.content = content()
+    }
+    
+    var body: some View {
+        Button(action: action) {
+            content
+                .frame(maxWidth: .infinity)
+                .padding()
+                .foregroundColor(Color.black)
+                .frame(maxWidth: .infinity)
+                .background(
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.yellow)
+                            .cornerRadius(50)
+                    }
+                )
+                .padding()
+        }
     }
 }
 
