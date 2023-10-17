@@ -206,7 +206,7 @@ struct loginView: View{
                                     Button{
                                         isSheetPresented = false
                                     } label:{
-                                        NavigationLink(destination: Navigator.navigate(route: .view3) {
+                                        NavigationLink(destination: Navigator.navigate(route: .view1) {
                                             Text("Go to View 1")
                                         }) {
                                             Text(ButtonTitle)

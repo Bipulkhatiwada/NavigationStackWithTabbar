@@ -11,10 +11,14 @@ enum Route {
     case OnboardingView
     case PinView
     case view3
+    case view2
+    case view1
     case home
     case segemntedView
     case loginView
+    case LoginView2
     case listView
+    case RegistrationFormView
     
 }
 
@@ -33,8 +37,16 @@ struct Navigator {
             return AnyView(SegmentedView())
         case .loginView:
             return AnyView(loginView())
+        case .LoginView2:
+            return AnyView(LoginView2())
         case .listView:
             return AnyView(ListView())
+        case .view1:
+            return AnyView(View1())
+        case .view2:
+            return AnyView(View2())
+        case .RegistrationFormView:
+            return AnyView(RegistrationFormView())
         }
         
     }
@@ -68,7 +80,7 @@ struct HomeView: View {
                         Text("View 1")
                     }
                 }.onAppear{
-                    //                    viewRouter.currentRoute = .view1
+//                                        viewRouter.currentRoute = .view1
                 }
                 
             }
@@ -177,7 +189,7 @@ struct OnboardingView: View {
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .automatic))
             
-            NavigationLink(destination: Navigator.navigate(route: .loginView) {
+            NavigationLink(destination: Navigator.navigate(route: .LoginView2) {
                 Text("Go to View 1")
             }) {
                 Text("Get Started")
@@ -241,19 +253,79 @@ struct View3: View {
         }
     }
 }
-
-
-
-
-struct View1_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingView()
-            .environmentObject(ViewRouter())
+struct View1: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+    
+    var body: some View {
+        VStack {
+            Text("View 1")
+                .navigationBarTitle("View 3", displayMode: .inline)
+            
+            NavigationLink(destination: Navigator.navigate(route: .view2) {
+                Text("Go to View 1")
+            }) {
+                Text("View 2")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(Color.black)
+                
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        ZStack{
+                            Rectangle()
+                                .fill(Color.yellow)
+                                .cornerRadius(12)
+                                .shadow(radius: 14)
+                            
+                        }
+                    )
+            }
+        }
     }
 }
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-            .environmentObject(ViewRouter())
+struct View2: View {
+    @EnvironmentObject private var viewRouter: ViewRouter
+    
+    var body: some View {
+        VStack {
+            Text("View 3")
+                .navigationBarTitle("View 3", displayMode: .inline)
+            
+            NavigationLink(destination: Navigator.navigate(route: .view3) {
+                Text("Go to View 1")
+            }) {
+                Text("View 3")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(Color.black)
+                
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        ZStack{
+                            Rectangle()
+                                .fill(Color.yellow)
+                                .cornerRadius(12)
+                                .shadow(radius: 14)
+                            
+                        }
+                    )
+            }
+        }
+    }
+    
+    
+    
+    
+    struct View1_Previews: PreviewProvider {
+        static var previews: some View {
+            OnboardingView()
+                .environmentObject(ViewRouter())
+        }
+    }
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            HomeView()
+                .environmentObject(ViewRouter())
+        }
     }
 }
