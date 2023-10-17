@@ -24,27 +24,54 @@ struct RegistrationFormView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isRegistered: Bool = false
+    @State private var registrationError: String? = nil
+
     
     private var isRegisterButtonDisabled: Bool {
-        return name.isEmpty || email.isEmpty || password.isEmpty
+        return name.isEmpty || email.isEmpty || password.isEmpty || registrationError != nil
     }
     
     var body: some View {
         VStack {
             TextField("Name", text: $name)
                 .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.words)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.yellow, lineWidth: 0.5)
+                )
             
             TextField("Email", text: $email)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.emailAddress)
-                .autocapitalization(.none)
-            
+                       .onChange(of: email) { newValue in
+                           if(newValue.range(of:"^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", options: .regularExpression) != nil) {
+                               
+                               self.registrationError = nil
+                                                              
+                           } else {
+                               
+                               self.registrationError = "Invalid email"
+                               
+                           }
+                       }
+                       .padding()
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 8)
+                               .stroke(Color.yellow, lineWidth: 0.5)
+                       )
+                       .keyboardType(.emailAddress)
+                            .autocapitalization(.none)
+
             SecureField("Password", text: $password)
                 .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.yellow, lineWidth: 0.5)
+                )
+            if let error = registrationError {
+                Text(error)
+                    .foregroundColor(.red)
+                    .padding()
+            }
             
             NavigationLink(destination: LoginView2(), isActive: $isRegistered) {
                 EmptyView()
@@ -66,6 +93,7 @@ struct RegistrationFormView: View {
                     .cornerRadius(10)
             }
             .disabled(isRegisterButtonDisabled)
+            .padding()
         }
         .padding()
         .navigationTitle("Registration")
@@ -93,15 +121,40 @@ struct LoginView2: View {
 
     var body: some View {
         VStack {
+//            TextField("Email", text: $email)
+//                .padding()
+//                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                .keyboardType(.emailAddress)
+//                .autocapitalization(.none)
+            
             TextField("Email", text: $email)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.emailAddress)
-                .autocapitalization(.none)
+                       .onChange(of: email) { newValue in
+                           if(newValue.range(of:"^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", options: .regularExpression) != nil) {
+                               
+                               self.loginError = nil
+                                                              
+                           } else {
+                               
+                               self.loginError = "Invalid email"
+                               
+                           }
+                       }
+                       .padding()
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 8)
+                               .stroke(Color.yellow, lineWidth: 0.5)
+                       )
+                       .keyboardType(.emailAddress)
+                       .padding(.top, 42)
+                       .autocapitalization(.none)
+
             
             SecureField("Password", text: $password)
                 .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.yellow, lineWidth: 0.5)
+                )
             
             if let error = loginError {
                 Text(error)
@@ -113,39 +166,43 @@ struct LoginView2: View {
                 EmptyView()
             }
             
-            Button(action: {
-                // Implement login logic here
-                self.login()
-            }) {
-                Text("Login")
-                    .font(.headline)
-                    .padding()
-                    .frame(width: 200, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            if authenticate {
-                
+            HStack{
                 Button(action: {
-                               authenticateWithFaceID()
-                           }) {
-                               Text("Authenticate with Face ID")
-                                   .font(.headline)
-                                   .padding()
-                                   .frame(width: 200, height: 50)
-                                   .background(Color.green)
-                                   .foregroundColor(.white)
-                                   .cornerRadius(10)
-                           }
-                       
-                       .padding()
-
-            }
+                    // Implement login logic here
+                    self.login()
+                }) {
+                    Text("Login")
+                        .font(.headline)
+                        .padding(6)
+                        .frame(maxWidth:.infinity)
+                        .frame(height: 45)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }.padding(6)
+                if authenticate {
+                    
+                    Button(action: {
+                        authenticateWithFaceID()
+                    }) {
+                        Image(systemName:"faceid")
+                            .font(.headline)
+                            .padding(6)
+                            .frame(width: 45, height: 45)
+                            .foregroundColor(.white)
+                            .background(Color.yellow)
+                            .cornerRadius(10)
+                    }
+                    
+                    .padding(6)
+                    
+                }
+            }.padding(8)
 
         }
         .onAppear{
             authenticate = UserDefaults.standard.bool(forKey: "savePasswordUsingFaceID")
+            loginError = nil
         }
         .onDisappear{
             password = ""
