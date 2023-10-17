@@ -12,54 +12,66 @@ import LocalAuthentication
 
 import SwiftUI
 
+class userInfo: ObservableObject {
+    @Published var email: String = ""
+}
+
+
+import SwiftUI
+
 struct RegistrationFormView: View {
     @State private var name: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isRegistered: Bool = false
     
+    private var isRegisterButtonDisabled: Bool {
+        return name.isEmpty || email.isEmpty || password.isEmpty
+    }
+    
     var body: some View {
-            VStack {
-                TextField("Name", text: $name)
-                    .padding()
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.words)
-                
-                TextField("Email", text: $email)
-                    .padding()
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .keyboardType(.emailAddress)
-                    .autocapitalization(.none)
-                
-                SecureField("Password", text: $password)
-                    .padding()
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                NavigationLink(destination: LoginView2(), isActive: $isRegistered) {
-                    EmptyView()
-                }
-                
-                Button(action: {
-                    // Save the name and password to Keychain
-                    KeychainHelper.savePassword(password, forAccount: email)
-                    print("Registered with Name: \(name), Email: \(email), Password saved to Keychain")
-                    
-                    // Navigate to the login screen
-                    self.isRegistered = true
-                }) {
-                    Text("Register")
-                        .font(.headline)
-                        .padding()
-                        .frame(width: 200, height: 50)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
+        VStack {
+            TextField("Name", text: $name)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(.words)
+            
+            TextField("Email", text: $email)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(.emailAddress)
+                .autocapitalization(.none)
+            
+            SecureField("Password", text: $password)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            NavigationLink(destination: LoginView2(), isActive: $isRegistered) {
+                EmptyView()
             }
-            .padding()
-            .navigationTitle("Registration")
+            
+            Button(action: {
+                // Save the name and password to Keychain
+                KeychainHelper.savePassword(password, forAccount: email)
+                print("Registered with Name: \(name), Email: \(email), Password saved to Keychain")
+                // Navigate to the login screen
+                self.isRegistered = true
+            }) {
+                Text("Register")
+                    .font(.headline)
+                    .padding()
+                    .frame(width: 200, height: 50)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .disabled(isRegisterButtonDisabled)
+        }
+        .padding()
+        .navigationTitle("Registration")
     }
 }
+
 
 struct RegistrationFormView_Previews: PreviewProvider {
     static var previews: some View {
@@ -75,6 +87,10 @@ struct LoginView2: View {
     @State private var loginError: String? = nil
     @State private var isLogged: Bool = false
     
+    @State private var authenticate:Bool = UserDefaults.standard.bool(forKey: "savePasswordUsingFaceID")
+    
+    @EnvironmentObject private var userInfo: userInfo
+
     var body: some View {
         VStack {
             TextField("Email", text: $email)
@@ -109,19 +125,33 @@ struct LoginView2: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
-            Button(action: {
-                           authenticateWithFaceID()
-                       }) {
-                           Text("Authenticate with Face ID")
-                               .font(.headline)
-                               .padding()
-                               .frame(width: 200, height: 50)
-                               .background(Color.green)
-                               .foregroundColor(.white)
-                               .cornerRadius(10)
-                       }
-                   
-                   .padding()
+            if authenticate {
+                
+                Button(action: {
+                               authenticateWithFaceID()
+                           }) {
+                               Text("Authenticate with Face ID")
+                                   .font(.headline)
+                                   .padding()
+                                   .frame(width: 200, height: 50)
+                                   .background(Color.green)
+                                   .foregroundColor(.white)
+                                   .cornerRadius(10)
+                           }
+                       
+                       .padding()
+
+            }
+
+        }
+        .onAppear{
+            authenticate = UserDefaults.standard.bool(forKey: "savePasswordUsingFaceID")
+        }
+        .onDisappear{
+            password = ""
+            email = ""
+            loginError = nil
+            
         }
         .padding()
         .navigationTitle("Login")
@@ -134,9 +164,9 @@ struct LoginView2: View {
         }
         
         if password == savedPassword {
-            print("Logged in with Email: \(email), Password: \(password)")
             // Navigate to the success view
             self.isLogged = true
+//            userInfo.email = email
         } else {
             loginError = "Invalid email or password"
         }
@@ -155,7 +185,6 @@ struct LoginView2: View {
                         // Authentication successful, retrieve the password from Keychain
                         if let savedPassword = KeychainHelper.retrievePassword(forAccount: email) {
                             password = savedPassword
-                            print("Password retrieved from Keychain: \(password)")
                             self.login()
                         } else {
                             print("Password not found in Keychain for the provided email")
@@ -239,26 +268,36 @@ struct SuccessView: View {
                 .padding()
             
             Toggle(isOn: $savePasswordUsingFaceID, label: {
-                Text("Save Password using Face ID")
+                Text("enable faceId for login")
             })
             .padding()
             
-            Button(action: {
-                if savePasswordUsingFaceID {
-                    savePasswordToKeychain()
-                } else {
-                    removePasswordFromKeychain()
-                }
-            }) {
-                Text(savePasswordUsingFaceID ? "Save Password" : "Remove Password")
-                    .font(.headline)
-                    .padding()
-                    .frame(width: 200, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
+//            Button(action: {
+//                if savePasswordUsingFaceID {
+//                    savePasswordToKeychain()
+//                } else {
+//                    removePasswordFromKeychain()
+//                }
+//            }) {
+//                Text(savePasswordUsingFaceID ? "Save Password" : "Remove Password")
+//                    .font(.headline)
+//                    .padding()
+//                    .frame(width: 200, height: 50)
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
+//            }
         }
+        .onAppear{
+            print(UserDefaults.standard.bool(forKey: "savePasswordUsingFaceID"))
+        }
+        .onChange(of: savePasswordUsingFaceID, perform: { status in
+            if status {
+                savePasswordToKeychain()
+            } else {
+                removePasswordFromKeychain()
+            }
+        })
         .padding()
         .navigationTitle("Success")
     }
@@ -277,9 +316,11 @@ struct SuccessView: View {
                     if success {
                         // Authentication successful, save the password to Keychain
                         savePasswordUsingBiometrics()
+                        savePasswordUsingFaceID = true
                     } else {
                         // Authentication failed
-                        print("Face ID authentication failed")
+                        removePasswordFromKeychain()
+                        savePasswordUsingFaceID = false
                     }
                 }
             }
@@ -290,17 +331,13 @@ struct SuccessView: View {
     }
 
     private func savePasswordUsingBiometrics() {
-        // Implement saving the password to Keychain here
-        // For this example, we'll simply set isPasswordSaved to true
         isPasswordSaved = true
-        
         // Save the toggle state to UserDefaults
         UserDefaults.standard.set(savePasswordUsingFaceID, forKey: "savePasswordUsingFaceID")
     }
     
     private func removePasswordFromKeychain() {
         // Replace with your logic to remove the password from Keychain
-        // For this example, we'll simply set isPasswordSaved to false
         isPasswordSaved = false
         
         // Save the toggle state to UserDefaults
